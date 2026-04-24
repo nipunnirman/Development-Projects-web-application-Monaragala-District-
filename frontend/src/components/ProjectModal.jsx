@@ -1,0 +1,107 @@
+import { useEffect, useRef } from 'react';
+import './ProjectModal.css';
+
+const STATUS_LABELS = { planned: 'Planned / සැලසුම් කළ', ongoing: 'Ongoing / සිදු වෙමින්', completed: 'Completed / සම්පූර්ණ' };
+
+export default function ProjectModal({ project, onClose }) {
+  const ref = useRef();
+
+  useEffect(() => {
+    const handleKey = e => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', handleKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', handleKey);
+      document.body.style.overflow = '';
+    };
+  }, [onClose]);
+
+  if (!project) return null;
+
+  const fmt = d => d ? new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : '—';
+  const hasCoords = project.latitude && project.longitude;
+
+  return (
+    <div className="modal-overlay" onClick={e => e.target === ref.current && onClose()} ref={ref}>
+      <div className="modal-box card fade-up">
+        <div className={`modal-stripe status-${project.status}`} />
+
+        <div className="modal-header">
+          <div>
+            <span className={`badge badge-${project.status}`}>{STATUS_LABELS[project.status]}</span>
+            <h2 className="modal-title sinhala">{project.projectName}</h2>
+          </div>
+          <button className="modal-close" onClick={onClose}>✕</button>
+        </div>
+
+        <div className="modal-body">
+          {project.images && project.images.length > 0 && (
+            <section className="modal-section">
+              <div className="modal-image-gallery">
+                {project.images.map((img, idx) => (
+                  <img key={idx} src={img} alt={`Project ${idx + 1}`} className="modal-project-img" />
+                ))}
+              </div>
+            </section>
+          )}
+
+          <section className="modal-section">
+            <div className="modal-section-label">Description / විස්තරය</div>
+            <p className="sinhala modal-desc">{project.description}</p>
+          </section>
+
+          <div className="modal-grid">
+            <section className="modal-section">
+              <div className="modal-section-label">Location / ස්ථානය</div>
+              <div className="modal-location-row">
+                <div className="modal-loc-item">
+                  <span className="loc-label">District</span>
+                  <span className="sinhala">{project.districtId?.nameSi} ({project.districtId?.name})</span>
+                </div>
+                <div className="modal-loc-item">
+                  <span className="loc-label">DS Division</span>
+                  <span className="sinhala">{project.dsDivisionId?.nameSi} ({project.dsDivisionId?.name})</span>
+                </div>
+                <div className="modal-loc-item">
+                  <span className="loc-label">GN Division</span>
+                  <span className="sinhala">{project.gnDivisionId?.nameSi} ({project.gnDivisionId?.name})</span>
+                </div>
+              </div>
+            </section>
+
+            <section className="modal-section">
+              <div className="modal-section-label">Timeline / කාලසීමාව</div>
+              <div className="modal-timeline">
+                <div className="tl-item">
+                  <span className="loc-label">Start</span>
+                  <span>{fmt(project.startDate)}</span>
+                </div>
+                <div className="tl-arrow">→</div>
+                <div className="tl-item">
+                  <span className="loc-label">End</span>
+                  <span>{fmt(project.endDate)}</span>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          {hasCoords && (
+            <section className="modal-section">
+              <div className="modal-section-label">Coordinates</div>
+              <div className="modal-coords">
+                <span>🌐 {project.latitude?.toFixed(5)}, {project.longitude?.toFixed(5)}</span>
+                <a
+                  className="btn btn-outline btn-sm"
+                  href={`https://maps.google.com/?q=${project.latitude},${project.longitude}`}
+                  target="_blank" rel="noopener noreferrer"
+                >
+                  Open in Google Maps ↗
+                </a>
+              </div>
+            </section>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}

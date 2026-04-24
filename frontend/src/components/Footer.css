@@ -1,0 +1,38 @@
+.footer {
+  background: var(--navy);
+  border-top: 2px solid var(--gold-dim);
+  padding: 24px 0;
+  margin-top: auto;
+}
+
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.4rem;
+}
+
+.footer-title {
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--gold-light);
+}
+
+.footer-sub {
+  font-size: .72rem;
+  color: rgba(255,255,255,.4);
+  margin-top: 2px;
+}
+
+.footer-note {
+  font-size: .76rem;
+  color: rgba(255,255,255,.35);
+}

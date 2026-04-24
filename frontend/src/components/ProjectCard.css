@@ -1,0 +1,79 @@
+.project-card {
+  cursor: pointer;
+  position: relative;
+  padding-left: 0;
+}
+
+.project-card-accent {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 5px;
+  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+}
+.status-planned   .project-card-accent { background: var(--status-planned); }
+.status-ongoing   .project-card-accent { background: var(--status-ongoing); }
+.status-completed .project-card-accent { background: var(--status-completed); }
+
+.project-card .card-body { padding-left: 28px; }
+
+.project-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.badge-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: .8;
+}
+
+.project-card-date {
+  font-size: .76rem;
+  color: var(--slate-lt);
+}
+
+.project-card-title {
+  font-family: 'Noto Sans Sinhala', sans-serif !important;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.project-card-desc {
+  font-size: .87rem;
+  color: var(--slate);
+  line-height: 1.6;
+  margin-bottom: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.project-card-location {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: .78rem;
+  color: var(--emerald);
+  font-weight: 500;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.project-card-location svg { opacity: .7; flex-shrink: 0; }
+.sep { color: var(--slate-lt); }
+
+.project-card-timeline {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: .76rem;
+  color: var(--slate-lt);
+}
+.project-card-timeline svg { opacity: .6; }
+.arrow { color: var(--gold-dim); font-weight: 700; }

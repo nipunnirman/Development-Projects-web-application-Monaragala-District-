@@ -1,0 +1,130 @@
+.admin-page { padding-bottom: 60px; }
+
+.admin-header {
+  background: var(--navy);
+  border-bottom: 3px solid var(--gold);
+  padding: 28px 0;
+}
+
+.admin-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.admin-title {
+  font-size: 1.7rem;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+
+.admin-sub {
+  font-size: .88rem;
+  color: rgba(255,255,255,.55);
+}
+.admin-sub strong { color: var(--gold-light); }
+
+.admin-body {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-top: 28px;
+}
+
+/* Stats */
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.admin-stat-card {
+  padding: 20px;
+  text-align: center;
+}
+
+.asc-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  color: var(--navy);
+  font-weight: 700;
+}
+
+.asc-lbl {
+  font-size: .78rem;
+  color: var(--slate-lt);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-top: 4px;
+}
+
+.s-p .asc-num { color: var(--status-planned); }
+.s-o .asc-num { color: var(--status-ongoing); }
+.s-c .asc-num { color: var(--status-completed); }
+
+/* Table */
+.admin-table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--cream-dark);
+  font-weight: 700;
+  font-size: .9rem;
+  color: var(--navy);
+}
+
+.table-count {
+  font-size: .78rem;
+  color: var(--slate-lt);
+  font-weight: 400;
+}
+
+.table-scroll { overflow-x: auto; }
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .88rem;
+}
+
+.admin-table th {
+  background: var(--cream);
+  color: var(--slate);
+  text-align: left;
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: .76rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  white-space: nowrap;
+}
+
+.admin-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--cream-dark);
+  color: var(--navy);
+  vertical-align: middle;
+}
+
+.admin-table tr:last-child td { border-bottom: none; }
+.admin-table tr:hover td { background: rgba(201,168,76,.05); }
+
+.td-name {
+  font-weight: 600;
+  max-width: 220px;
+}
+
+.td-actions {
+  display: flex;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .admin-stats { grid-template-columns: repeat(2, 1fr); }
+  .admin-header-inner { flex-direction: column; align-items: flex-start; }
+}
