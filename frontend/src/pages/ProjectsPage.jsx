@@ -14,6 +14,38 @@ const STATUS_COUNTS = (projects) => ({
   completed: projects.filter(p => p.status === 'completed').length,
 });
 
+const AnimatedNumber = ({ value }) => {
+  const [displayValue, setDisplayValue] = useState(0);
+
+  useEffect(() => {
+    let currentStep = 0;
+    const end = parseInt(value, 10) || 0;
+    if (end === 0) return setDisplayValue(0);
+
+    const duration = 1200; // 1.2 seconds 
+    const incrementTime = 30;
+    const totalSteps = Math.floor(duration / incrementTime);
+
+    const timer = setInterval(() => {
+      currentStep++;
+      const progress = currentStep / totalSteps;
+      const easeOutCube = 1 - Math.pow(1 - progress, 3);
+      
+      const currentVal = Math.floor(easeOutCube * end);
+      setDisplayValue(Math.min(currentVal, end));
+
+      if (currentStep >= totalSteps) {
+        clearInterval(timer);
+        setDisplayValue(end);
+      }
+    }, incrementTime);
+
+    return () => clearInterval(timer);
+  }, [value]);
+
+  return <>{displayValue}</>;
+};
+
 export default function ProjectsPage() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -56,7 +88,7 @@ export default function ProjectsPage() {
                 { label: 'Completed', value: counts.completed, cls: 'stat-completed' },
               ].map(s => (
                 <div key={s.label} className={`hero-stat ${s.cls}`}>
-                  <span className="stat-num">{s.value}</span>
+                  <span className="stat-num"><AnimatedNumber value={s.value} /></span>
                   <span className="stat-lbl">{s.label}</span>
                 </div>
               ))}
