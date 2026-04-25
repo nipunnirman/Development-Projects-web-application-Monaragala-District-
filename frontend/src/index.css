@@ -36,10 +36,8 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: 'DM Sans', sans-serif;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  background: var(--cream);
+  color: var(--navy);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;

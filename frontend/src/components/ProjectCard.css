@@ -40,6 +40,11 @@
   border: 1px solid var(--gold-lt);
 }
 
+.project-card-date {
+  font-size: .76rem;
+  color: var(--slate-lt);
+}
+
 .project-card-title {
   font-family: 'Noto Sans Sinhala', sans-serif !important;
   font-size: 1.05rem;

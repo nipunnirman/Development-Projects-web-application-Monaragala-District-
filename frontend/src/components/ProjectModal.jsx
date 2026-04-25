@@ -19,7 +19,7 @@ export default function ProjectModal({ project, onClose }) {
   if (!project) return null;
 
   const fmt = d => d ? new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : '—';
-  const fmtCurrency = val => val ? `Rs. ${new Number(val).toLocaleString()}` : 'Not Specified';
+  const fmtCurrency = val => val ? `Rs. ${(val/1000000).toFixed(2)} Million` : 'Not Specified';
   const hasCoords = project.latitude && project.longitude;
 
   return (

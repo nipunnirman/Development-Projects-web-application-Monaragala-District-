@@ -27,9 +27,12 @@ export default function ProjectCard({ project, onClick }) {
             <span className="badge-dot" />
             {STATUS_LABELS[status]}
           </span>
-          {project.estimatedAmount > 0 && (
-            <span className="project-card-value">{fmtCurrency(project.estimatedAmount)}</span>
-          )}
+          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+            {project.estimatedAmount > 0 && (
+              <span className="project-card-value">{fmtCurrency(project.estimatedAmount)}</span>
+            )}
+            <span className="project-card-date">{fmt(startDate)}</span>
+          </div>
         </div>
 
         <h3 className="project-card-title sinhala">{projectName}</h3>
