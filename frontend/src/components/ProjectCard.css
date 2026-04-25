@@ -110,7 +110,10 @@
 }
 .progress-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--gold-lt), var(--gold-dim));
+  background: var(--navy);
   border-radius: 10px;
   transition: width 0.5s ease-out;
 }
+.progress-planned { background: linear-gradient(90deg, #60A5FA, #2563EB); }
+.progress-ongoing { background: linear-gradient(90deg, #FBBF24, #D97706); }
+.progress-completed { background: linear-gradient(90deg, #34D399, #059669); }

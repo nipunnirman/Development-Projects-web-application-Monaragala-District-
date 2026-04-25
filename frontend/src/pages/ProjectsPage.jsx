@@ -42,23 +42,28 @@ export default function ProjectsPage() {
     <div className="projects-page">
       {/* Hero */}
       <div className="projects-hero">
-        <div className="container">
-          <div className="hero-content fade-up">
-            <h1>Development Projects</h1>
-            <p className="hero-sub sinhala">ශ්‍රී ලංකාවේ සංවර්ධන ව්‍යාපෘති — සාරාංශය සහ ප්‍රගතිය</p>
+        <div className="container projects-hero-inner">
+          <div className="hero-left">
+            <div className="hero-content fade-up">
+              <h1>Development Projects</h1>
+              <p className="hero-sub sinhala">ශ්‍රී ලංකාවේ සංවර්ධන ව්‍යාපෘති — සාරාංශය සහ ප්‍රගතිය</p>
+            </div>
+            <div className="hero-stats fade-up fade-up-1">
+              {[
+                { label: 'Total', value: counts.all, cls: '' },
+                { label: 'Planned', value: counts.planned, cls: 'stat-planned' },
+                { label: 'Ongoing', value: counts.ongoing, cls: 'stat-ongoing' },
+                { label: 'Completed', value: counts.completed, cls: 'stat-completed' },
+              ].map(s => (
+                <div key={s.label} className={`hero-stat ${s.cls}`}>
+                  <span className="stat-num">{s.value}</span>
+                  <span className="stat-lbl">{s.label}</span>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="hero-stats fade-up fade-up-1">
-            {[
-              { label: 'Total', value: counts.all, cls: '' },
-              { label: 'Planned', value: counts.planned, cls: 'stat-planned' },
-              { label: 'Ongoing', value: counts.ongoing, cls: 'stat-ongoing' },
-              { label: 'Completed', value: counts.completed, cls: 'stat-completed' },
-            ].map(s => (
-              <div key={s.label} className={`hero-stat ${s.cls}`}>
-                <span className="stat-num">{s.value}</span>
-                <span className="stat-lbl">{s.label}</span>
-              </div>
-            ))}
+          <div className="hero-right fade-up fade-up-2">
+            <img src="/uva-e1708577472866.png" alt="Monaragala / Uva" className="hero-image" />
           </div>
         </div>
       </div>

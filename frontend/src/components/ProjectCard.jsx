@@ -44,7 +44,7 @@ export default function ProjectCard({ project, onClick }) {
             <span>{project.progress || 0}%</span>
           </div>
           <div className="progress-bar-bg">
-            <div className="progress-bar-fill" style={{ width: `${project.progress || 0}%` }} />
+            <div className={`progress-bar-fill progress-${status}`} style={{ width: `${project.progress || 0}%` }} />
           </div>
         </div>
 

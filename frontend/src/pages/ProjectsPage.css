@@ -18,6 +18,37 @@
   );
 }
 
+.projects-hero-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-left {
+  flex: 1;
+}
+
+.hero-right {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-image {
+  max-height: 140px;
+  width: auto;
+  opacity: 0.95;
+  filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3));
+  transition: transform 0.5s ease;
+}
+.hero-image:hover {
+  transform: scale(1.05);
+}
+
 .hero-content { position: relative; }
 
 .projects-hero h1 {

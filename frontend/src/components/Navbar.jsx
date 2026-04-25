@@ -21,22 +21,11 @@ export default function Navbar() {
         </Link>
 
         <div className="navbar-links">
-          <Link to="/" className={`nav-link ${loc.pathname === '/' ? 'active' : ''}`}>
-            Projects
-          </Link>
-          {admin ? (
-            <>
-              <Link to="/admin" className={`nav-link ${loc.pathname.startsWith('/admin') ? 'active' : ''}`}>
-                Dashboard
-              </Link>
-              <button className="btn btn-outline btn-sm" onClick={handleLogout}>
-                Logout
-              </button>
-            </>
-          ) : (
-            <Link to="/login" className="btn btn-primary btn-sm">
-              Admin Login
-            </Link>
+
+          {admin && (
+            <button className="btn btn-outline btn-sm" onClick={handleLogout}>
+              Logout
+            </button>
           )}
         </div>
       </div>
