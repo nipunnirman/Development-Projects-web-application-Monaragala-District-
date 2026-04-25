@@ -50,6 +50,10 @@ const projectSchema = new mongoose.Schema({
   images: [{
     type: String
   }],
+  estimatedAmount: {
+    type: Number,
+    default: 0,
+  },
 }, { timestamps: true });
 
 const Project = mongoose.model('Project', projectSchema);

@@ -450,6 +450,7 @@ const seed = async () => {
         startDate: new Date('2024-01-15'),
         endDate: new Date('2024-12-31'),
         status: 'ongoing',
+        estimatedAmount: 25000000,
       },
       {
         projectName: 'බිබිල ගොවිජන සේවා මධ්‍යස්ථානය',
@@ -463,6 +464,7 @@ const seed = async () => {
         startDate: new Date('2023-06-01'),
         endDate: new Date('2024-06-30'),
         status: 'completed',
+        estimatedAmount: 8500000,
       },
       {
         projectName: 'වැල්ලවාය ජල සැපයුම් ව්‍යාපෘතිය',
@@ -476,6 +478,7 @@ const seed = async () => {
         startDate: new Date('2025-03-01'),
         endDate: new Date('2026-03-31'),
         status: 'planned',
+        estimatedAmount: 45000000,
       },
       {
         projectName: 'කතරගම සංචාරක යටිතල පහසුකම් සංවර්ධනය',
@@ -489,6 +492,7 @@ const seed = async () => {
         startDate: new Date('2024-07-01'),
         endDate: new Date('2025-06-30'),
         status: 'ongoing',
+        estimatedAmount: 12000000,
       },
       {
         projectName: 'සියඹලාන්ඩුව ග්‍රාමීය විදුලිකරණ ව්‍යාපෘතිය',
@@ -502,6 +506,7 @@ const seed = async () => {
         startDate: new Date('2023-01-01'),
         endDate: new Date('2023-12-31'),
         status: 'completed',
+        estimatedAmount: 18000000,
       },
       {
         projectName: 'මොනරාගල දිස්ත්‍රික් රෝහල් ප්‍රතිසංස්කරණය',
@@ -515,6 +520,7 @@ const seed = async () => {
         startDate: new Date('2025-01-01'),
         endDate: new Date('2026-12-31'),
         status: 'planned',
+        estimatedAmount: 120000000,
       },
     ];
 

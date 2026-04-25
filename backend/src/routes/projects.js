@@ -54,6 +54,7 @@ router.post('/', protect, async (req, res) => {
       districtId, dsDivisionId, gnDivisionId,
       latitude, longitude,
       startDate, endDate, status,
+      estimatedAmount,
     } = req.body;
 
     const project = await Project.create({
@@ -62,6 +63,7 @@ router.post('/', protect, async (req, res) => {
       latitude: latitude || null,
       longitude: longitude || null,
       startDate, endDate, status,
+      estimatedAmount: estimatedAmount || 0,
     });
 
     const populated = await project.populate([

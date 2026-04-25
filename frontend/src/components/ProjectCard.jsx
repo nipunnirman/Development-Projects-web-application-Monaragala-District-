@@ -16,6 +16,7 @@ export default function ProjectCard({ project, onClick }) {
   const { projectName, description, status, startDate, endDate, districtId, dsDivisionId, gnDivisionId } = project;
 
   const fmt = d => d ? new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '—';
+  const fmtCurrency = val => val ? `Rs. ${(val/1000000).toFixed(1)}M` : '';
 
   return (
     <article className="project-card card fade-up" onClick={() => onClick?.(project)}>
@@ -26,7 +27,9 @@ export default function ProjectCard({ project, onClick }) {
             <span className="badge-dot" />
             {STATUS_LABELS[status]}
           </span>
-          <span className="project-card-date">{fmt(startDate)}</span>
+          {project.estimatedAmount > 0 && (
+            <span className="project-card-value">{fmtCurrency(project.estimatedAmount)}</span>
+          )}
         </div>
 
         <h3 className="project-card-title sinhala">{projectName}</h3>

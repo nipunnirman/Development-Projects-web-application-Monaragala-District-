@@ -9,6 +9,7 @@ const EMPTY = {
   districtId: '', dsDivisionId: '', gnDivisionId: '',
   latitude: '', longitude: '',
   startDate: '', endDate: '', status: 'planned',
+  estimatedAmount: '',
 };
 
 const toDateInput = d => d ? new Date(d).toISOString().split('T')[0] : '';
@@ -35,6 +36,7 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
         startDate: toDateInput(project.startDate),
         endDate:   toDateInput(project.endDate),
         status:    project.status || 'planned',
+        estimatedAmount: project.estimatedAmount || '',
       });
       if (project.districtId?._id || project.districtId) {
         loadDs(project.districtId?._id || project.districtId).then(() => {
@@ -79,6 +81,7 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
         ...form,
         latitude:  form.latitude  !== '' ? Number(form.latitude)  : null,
         longitude: form.longitude !== '' ? Number(form.longitude) : null,
+        estimatedAmount: form.estimatedAmount !== '' ? Number(form.estimatedAmount) : 0,
       };
       let result;
       if (isEdit) {
@@ -138,6 +141,16 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
                   value={form.description}
                   onChange={e => set('description', e.target.value)}
                   required
+                />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Project Value / මුදල (Rs.)</label>
+                <input
+                  type="number"
+                  className="form-input"
+                  placeholder="e.g. 5000000"
+                  value={form.estimatedAmount}
+                  onChange={e => set('estimatedAmount', e.target.value)}
                 />
               </div>
             </div>

@@ -19,6 +19,7 @@ export default function ProjectModal({ project, onClose }) {
   if (!project) return null;
 
   const fmt = d => d ? new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : '—';
+  const fmtCurrency = val => val ? `Rs. ${new Number(val).toLocaleString()}` : 'Not Specified';
   const hasCoords = project.latitude && project.longitude;
 
   return (
@@ -81,6 +82,13 @@ export default function ProjectModal({ project, onClose }) {
                   <span className="loc-label">End</span>
                   <span>{fmt(project.endDate)}</span>
                 </div>
+              </div>
+            </section>
+
+            <section className="modal-section">
+              <div className="modal-section-label">Project Value / ව්‍යාපෘති මුදල</div>
+              <div className="modal-value">
+                <span className="value-amount">{fmtCurrency(project.estimatedAmount)}</span>
               </div>
             </section>
           </div>
