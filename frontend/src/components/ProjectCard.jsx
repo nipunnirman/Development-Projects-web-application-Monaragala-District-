@@ -35,6 +35,16 @@ export default function ProjectCard({ project, onClick }) {
         <h3 className="project-card-title sinhala">{projectName}</h3>
         <p className="project-card-desc">{description}</p>
 
+        <div className="project-card-progress">
+          <div className="progress-label">
+            <span>Progress</span>
+            <span>{project.progress || 0}%</span>
+          </div>
+          <div className="progress-bar-bg">
+            <div className="progress-bar-fill" style={{ width: `${project.progress || 0}%` }} />
+          </div>
+        </div>
+
         <div className="project-card-location">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
           <span className="sinhala">{gnDivisionId?.nameSi || gnDivisionId?.name}</span>

@@ -10,6 +10,7 @@ const EMPTY = {
   latitude: '', longitude: '',
   startDate: '', endDate: '', status: 'planned',
   estimatedAmount: '',
+  progress: 0,
 };
 
 const toDateInput = d => d ? new Date(d).toISOString().split('T')[0] : '';
@@ -37,6 +38,7 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
         endDate:   toDateInput(project.endDate),
         status:    project.status || 'planned',
         estimatedAmount: project.estimatedAmount || '',
+        progress: project.progress || 0,
       });
       if (project.districtId?._id || project.districtId) {
         loadDs(project.districtId?._id || project.districtId).then(() => {
@@ -82,6 +84,7 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
         latitude:  form.latitude  !== '' ? Number(form.latitude)  : null,
         longitude: form.longitude !== '' ? Number(form.longitude) : null,
         estimatedAmount: form.estimatedAmount !== '' ? Number(form.estimatedAmount) : 0,
+        progress: Number(form.progress) || 0,
       };
       let result;
       if (isEdit) {
@@ -245,6 +248,23 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
                   <option value="ongoing">Ongoing / සිදු වෙමින්</option>
                   <option value="completed">Completed / සම්පූර්ණ</option>
                 </select>
+              </div>
+            </div>
+            <div className="form-group" style={{ marginTop: '15px' }}>
+              <label className="form-label">Progress Percentage / ප්‍රගතිය: {form.progress}%</label>
+              <input
+                type="range"
+                className="form-range"
+                min="0"
+                max="100"
+                step="5"
+                value={form.progress}
+                onChange={e => set('progress', e.target.value)}
+              />
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--slate-lt)' }}>
+                <span>0%</span>
+                <span>50%</span>
+                <span>100%</span>
               </div>
             </div>
           </div>

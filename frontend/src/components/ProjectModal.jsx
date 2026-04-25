@@ -93,6 +93,17 @@ export default function ProjectModal({ project, onClose }) {
             </section>
           </div>
 
+          <section className="modal-section">
+            <div className="modal-section-label">Project Progress / ව්‍යාපෘති ප්‍රගතිය</div>
+            <div className="modal-progress-container">
+              <div className="modal-progress-bar-bg">
+                <div className="modal-progress-bar-fill" style={{ width: `${project.progress || 0}%` }}>
+                  <span className="progress-text">{project.progress || 0}%</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
           {hasCoords && (
             <section className="modal-section">
               <div className="modal-section-label">Coordinates</div>
