@@ -28,7 +28,10 @@ export const deleteProject = id => api.delete(`/projects/${id}`);
 export const uploadProjectImage = (id, file) => {
   const formData = new FormData();
   formData.append('image', file);
-  return api.post(`/projects/${id}/upload`, formData);
+  const token = localStorage.getItem('admin_token');
+  return axios.post(`${BASE_URL}/projects/${id}/upload`, formData, {
+    headers: { ...(token && { Authorization: `Bearer ${token}` }) }
+  });
 };
 
 // ── Auth endpoints ──────────────────────────────────────────
