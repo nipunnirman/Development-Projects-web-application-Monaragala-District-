@@ -28,9 +28,7 @@ export const deleteProject = id => api.delete(`/projects/${id}`);
 export const uploadProjectImage = (id, file) => {
   const formData = new FormData();
   formData.append('image', file);
-  return api.post(`/projects/${id}/upload`, formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  });
+  return api.post(`/projects/${id}/upload`, formData);
 };
 
 // ── Auth endpoints ──────────────────────────────────────────
