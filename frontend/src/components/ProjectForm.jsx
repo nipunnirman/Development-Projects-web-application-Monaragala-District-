@@ -46,8 +46,13 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
             loadGn(project.dsDivisionId?._id || project.dsDivisionId);
         });
       }
+    } else if (districts.length > 0 && !form.districtId) {
+      // Auto-select the first district (Monaragala) since this system is exclusive to it
+      const defaultD = districts[0];
+      setForm(f => ({ ...f, districtId: defaultD._id }));
+      loadDs(defaultD._id);
     }
-  }, [project]);
+  }, [project, districts]);
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
 
@@ -179,15 +184,6 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
           <div className="form-section">
             <div className="form-section-title">Location Hierarchy</div>
             <div className="form-grid">
-              <div className="form-group">
-                <label className="form-label">District *</label>
-                <select className="form-select" value={form.districtId} onChange={handleDistrict} required>
-                  <option value="">Select District</option>
-                  {districts.map(d => (
-                    <option key={d._id} value={d._id}>{d.nameSi} ({d.name})</option>
-                  ))}
-                </select>
-              </div>
               <div className="form-group">
                 <label className="form-label">DS Division *</label>
                 <select className="form-select" value={form.dsDivisionId} onChange={handleDs} required disabled={!form.districtId}>

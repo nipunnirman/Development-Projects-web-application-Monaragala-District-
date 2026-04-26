@@ -7,8 +7,8 @@ export default function Footer() {
         <div className="footer-brand">
           <span>🇱🇰</span>
           <div>
-            <div className="footer-title sinhala">ශ්‍රී ලංකා සංවර්ධන ව්‍යාපෘති</div>
-            <div className="footer-sub">Sri Lanka Development Projects Management System</div>
+            <div className="footer-title sinhala">මොණරාගල දිස්ත්‍රික්කයේ සංවර්ධන ව්‍යාපෘති</div>
+            <div className="footer-sub">Monaragala District Development Projects Management System</div>
           </div>
         </div>
         <div className="footer-note">

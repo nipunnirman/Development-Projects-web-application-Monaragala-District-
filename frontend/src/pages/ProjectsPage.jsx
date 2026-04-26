@@ -77,8 +77,8 @@ export default function ProjectsPage() {
         <div className="container projects-hero-inner">
           <div className="hero-left">
             <div className="hero-content fade-up">
-              <h1>Development Projects</h1>
-              <p className="hero-sub sinhala">ශ්‍රී ලංකාවේ සංවර්ධන ව්‍යාපෘති — සාරාංශය සහ ප්‍රගතිය</p>
+              <h1>Monaragala District Development Projects</h1>
+              <p className="hero-sub sinhala">මොණරාගල දිස්ත්‍රික්කයේ සංවර්ධන ව්‍යාපෘති — සාරාංශය සහ ප්‍රගතිය</p>
             </div>
             <div className="hero-stats fade-up fade-up-1">
               {[

@@ -15,8 +15,8 @@ export default function Navbar() {
         <Link to="/" className="navbar-brand">
           <span className="navbar-flag">🇱🇰</span>
           <div>
-            <div className="navbar-title">ශ්‍රී ලංකා සංවර්ධන ව්‍යාපෘති</div>
-            <div className="navbar-subtitle">Sri Lanka Development Projects</div>
+            <div className="navbar-title">මොණරාගල දිස්ත්‍රික්කයේ සංවර්ධන ව්‍යාපෘති</div>
+            <div className="navbar-subtitle">Monaragala District Development Projects</div>
           </div>
         </Link>
 
