@@ -316,46 +316,34 @@
     padding-bottom: 4px;
   }
   .ds-filter-bar { top: 56px; }
-  
+
   .projects-hero-inner {
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 20px;
+    align-items: flex-start;
+    text-align: left;
+    gap: 0;
   }
-  
-  .projects-hero h1 { 
-    font-size: 1.8rem; 
-    line-height: 1.2;
+
+  /* Hide stats and image on mobile */
+  .hero-stats,
+  .hero-right { display: none; }
+
+  .projects-hero {
+    padding: 28px 0 22px;
   }
-  
+
+  .projects-hero h1 {
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
+
   .hero-sub {
-    font-size: 0.95rem;
+    font-size: 0.88rem;
     margin-top: 6px;
-  }
-
-  .hero-right {
-    order: -1; /* Move image above title on mobile */
-    margin-bottom: 8px;
-  }
-
-  .hero-image {
-    max-height: 110px;
-  }
-
-  .hero-stats {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2x2 grid of stats */
-    gap: 12px;
-    width: 100%;
-    margin-top: 16px;
-  }
-  
-  .hero-stat {
-    padding: 16px 10px;
+    opacity: 0.8;
   }
 }
 
 @media (max-width: 480px) {
-  .projects-hero h1 { font-size: 1.6rem; }
+  .projects-hero h1 { font-size: 1.3rem; }
 }
