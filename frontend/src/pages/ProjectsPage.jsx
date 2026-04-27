@@ -159,6 +159,12 @@ export default function ProjectsPage() {
               >
                 සියල්ල
               </button>
+              <button
+                className={`ds-btn ${activeDs === 'public' ? 'ds-btn-active' : ''}`}
+                onClick={() => handleDsClick('public')}
+              >
+                පොදු ව්‍යාපෘති
+              </button>
               {dsDivisions.map(ds => (
                 <button
                   key={ds._id}
@@ -171,8 +177,8 @@ export default function ProjectsPage() {
             </div>
           </div>
 
-          {/* GN Division scroll buttons — only shown when a DS is selected */}
-          {activeDs && gnDivisions.length > 0 && (
+          {/* GN Division scroll buttons — only shown when a DS is selected and it's not public projects */}
+          {activeDs && activeDs !== 'public' && gnDivisions.length > 0 && (
             <div className="gn-filter-inner">
               <span className="ds-filter-label">ග්‍රාම නිලධාරී</span>
               <div className="gn-buttons">
@@ -234,6 +240,47 @@ export default function ProjectsPage() {
             </button>
           </div>
         </div>
+
+        {/* ── Financial Summary Card ── */}
+        {!loading && projects.length > 0 && (() => {
+          const totalValue = projects.reduce((s, p) => s + (Number(p.estimatedAmount) || 0), 0);
+          const totalMillion = totalValue / 1_000_000;
+          const planned   = projects.filter(p => p.status === 'planned').length;
+          const ongoing   = projects.filter(p => p.status === 'ongoing').length;
+          const completed = projects.filter(p => p.status === 'completed').length;
+          return (
+            <div className="summary-card">
+              <div className="summary-main">
+                <div className="summary-icon">💰</div>
+                <div>
+                  <div className="summary-label">PROJECT VALUE / ව්‍යාපෘති මුදල</div>
+                  <div className="summary-value">
+                    Rs. {totalMillion.toFixed(2)} <span className="summary-unit">Million</span>
+                  </div>
+                </div>
+              </div>
+              <div className="summary-divider" />
+              <div className="summary-stats">
+                <div className="summary-stat">
+                  <span className="ss-num">{projects.length}</span>
+                  <span className="ss-lbl">ව්‍යාපෘති</span>
+                </div>
+                <div className="summary-stat ss-planned">
+                  <span className="ss-num">{planned}</span>
+                  <span className="ss-lbl">සැලසුම් කළ</span>
+                </div>
+                <div className="summary-stat ss-ongoing">
+                  <span className="ss-num">{ongoing}</span>
+                  <span className="ss-lbl">සිදු වෙමින්</span>
+                </div>
+                <div className="summary-stat ss-completed">
+                  <span className="ss-num">{completed}</span>
+                  <span className="ss-lbl">නිමවූ</span>
+                </div>
+              </div>
+            </div>
+          );
+        })()}
 
         {error && <div className="alert alert-error">{error}</div>}
 

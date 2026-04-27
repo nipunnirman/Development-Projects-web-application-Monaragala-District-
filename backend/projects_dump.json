@@ -1,0 +1,294 @@
+{
+  "success": true,
+  "count": 7,
+  "data": [
+    {
+      "_id": "69ef82fa4227a552bc4eba2b",
+      "projectName": "ROAD",
+      "description": "DQAWDW",
+      "scope": "public",
+      "districtId": {
+        "_id": "69ec8a60137d2e7fb5e6302e",
+        "name": "Monaragala",
+        "nameSi": "මොනරාගල"
+      },
+      "dsDivisionId": null,
+      "gnDivisionId": null,
+      "affectedDsDivisions": [
+        {
+          "_id": "69ec8a62137d2e7fb5e6303a",
+          "name": "Badalkumbura",
+          "nameSi": "බඩල්කුඹුර"
+        },
+        {
+          "_id": "69ec8a62137d2e7fb5e63038",
+          "name": "Kataragama",
+          "nameSi": "කතරගම"
+        },
+        {
+          "_id": "69ec8a64137d2e7fb5e6303e",
+          "name": "Madulla",
+          "nameSi": "මඩුල්ල"
+        },
+        {
+          "_id": "69ec8a66137d2e7fb5e63044",
+          "name": "Sewanagala",
+          "nameSi": "සෙවනගල"
+        },
+        {
+          "_id": "69ec8a62137d2e7fb5e63034",
+          "name": "Wellawaya",
+          "nameSi": "වැල්ලවාය"
+        },
+        {
+          "_id": "69ec8a65137d2e7fb5e63042",
+          "name": "Thanamalwila",
+          "nameSi": "තණමල්විල"
+        },
+        {
+          "_id": "69ec8a60137d2e7fb5e63030",
+          "name": "Monaragala",
+          "nameSi": "මොනරාගල"
+        },
+        {
+          "_id": "69ec8a61137d2e7fb5e63032",
+          "name": "Bibile",
+          "nameSi": "බිබිල"
+        },
+        {
+          "_id": "69ec8a64137d2e7fb5e63040",
+          "name": "Buttala",
+          "nameSi": "බුත්තල"
+        },
+        {
+          "_id": "69ec8a63137d2e7fb5e6303c",
+          "name": "Medagama",
+          "nameSi": "මැදගම"
+        },
+        {
+          "_id": "69ec8a62137d2e7fb5e63036",
+          "name": "Siyambalanduwa",
+          "nameSi": "සියඹලාන්ඩුව"
+        }
+      ],
+      "affectedGnDivisions": [],
+      "latitude": null,
+      "longitude": null,
+      "startDate": "2026-04-02T00:00:00.000Z",
+      "endDate": "2026-04-07T00:00:00.000Z",
+      "status": "planned",
+      "images": [],
+      "estimatedAmount": 11000000000,
+      "progress": 0,
+      "createdAt": "2026-04-27T15:38:34.650Z",
+      "updatedAt": "2026-04-27T15:54:52.550Z",
+      "__v": 0
+    },
+    {
+      "scope": "specific",
+      "affectedDsDivisions": [],
+      "affectedGnDivisions": [],
+      "_id": "69ec8ac9137d2e7fb5e632c8",
+      "projectName": "සියඹලාන්ඩුව ග්‍රාමීය විදුලිකරණ ව්‍යාපෘතිය",
+      "description": "සියඹලාන්ඩුව ප්‍රාදේශීය ලේකම් කොට්ඨාශයේ ගම්මාන 15 ක ග්‍රාමීය ප්‍රජාවන්ට ජාතික ග්‍රිඩ් සම්බන්ධ කිරීම.",
+      "districtId": {
+        "_id": "69ec8a60137d2e7fb5e6302e",
+        "name": "Monaragala",
+        "nameSi": "මොනරාගල"
+      },
+      "dsDivisionId": {
+        "_id": "69ec8a62137d2e7fb5e63036",
+        "name": "Siyambalanduwa",
+        "nameSi": "සියඹලාන්ඩුව"
+      },
+      "gnDivisionId": {
+        "_id": "69ec8a90137d2e7fb5e63108",
+        "name": "Ambagahapitiya",
+        "nameSi": "අඹගහපිටිය"
+      },
+      "latitude": 7.1481,
+      "longitude": 81.5832,
+      "startDate": "2023-01-01T00:00:00.000Z",
+      "endDate": "2023-12-31T00:00:00.000Z",
+      "status": "completed",
+      "images": [
+        "https://res.cloudinary.com/dm1pfim3k/image/upload/v1777205915/monaragala_projects/ik6ymkfxlrladm5wytrh.jpg"
+      ],
+      "estimatedAmount": 18000000,
+      "progress": 80,
+      "__v": 1,
+      "createdAt": "2026-04-25T09:35:05.177Z",
+      "updatedAt": "2026-04-26T12:18:36.778Z"
+    },
+    {
+      "scope": "specific",
+      "affectedDsDivisions": [],
+      "affectedGnDivisions": [],
+      "_id": "69ec8ac9137d2e7fb5e632c9",
+      "projectName": "මොනරාගල දිස්ත්‍රික් රෝහල් ප්‍රතිසංස්කරණය",
+      "description": "මොනරාගල දිස්ත්‍රික් රෝහලේ ICU ඒකකය ප්‍රසාරණය සහ OPD ගොඩනැගිල්ල ප්‍රතිසංස්කරණය.",
+      "districtId": {
+        "_id": "69ec8a60137d2e7fb5e6302e",
+        "name": "Monaragala",
+        "nameSi": "මොනරාගල"
+      },
+      "dsDivisionId": {
+        "_id": "69ec8a60137d2e7fb5e63030",
+        "name": "Monaragala",
+        "nameSi": "මොනරාගල"
+      },
+      "gnDivisionId": {
+        "_id": "69ec8a68137d2e7fb5e63048",
+        "name": "Nakkala",
+        "nameSi": "නක්කල"
+      },
+      "latitude": 6.8734,
+      "longitude": 81.3515,
+      "startDate": "2025-01-01T00:00:00.000Z",
+      "endDate": "2026-12-31T00:00:00.000Z",
+      "status": "planned",
+      "images": [],
+      "estimatedAmount": 120000000,
+      "progress": 0,
+      "__v": 0,
+      "createdAt": "2026-04-25T09:35:05.177Z",
+      "updatedAt": "2026-04-25T09:35:05.177Z"
+    },
+    {
+      "scope": "specific",
+      "affectedDsDivisions": [],
+      "affectedGnDivisions": [],
+      "_id": "69ec8ac9137d2e7fb5e632c5",
+      "projectName": "බිබිල ගොවිජන සේවා මධ්‍යස්ථානය",
+      "description": "කුඩා පරිමාණ ගොවීන් සඳහා නූතන ගොවිජන සේවා සහ පුහුණු සැසි පැවැත්වීම.",
+      "districtId": {
+        "_id": "69ec8a60137d2e7fb5e6302e",
+        "name": "Monaragala",
+        "nameSi": "මොනරාගල"
+      },
+      "dsDivisionId": {
+        "_id": "69ec8a61137d2e7fb5e63032",
+        "name": "Bibile",
+        "nameSi": "බිබිල"
+      },
+      "gnDivisionId": {
+        "_id": "69ec8a75137d2e7fb5e6307a",
+        "name": "Radaliyadda",
+        "nameSi": "රදලියද්ද"
+      },
+      "latitude": 7.1564,
+      "longitude": 81.2103,
+      "startDate": "2023-06-01T00:00:00.000Z",
+      "endDate": "2024-06-30T00:00:00.000Z",
+      "status": "completed",
+      "images": [],
+      "estimatedAmount": 8500000,
+      "progress": 100,
+      "__v": 0,
+      "createdAt": "2026-04-25T09:35:05.176Z",
+      "updatedAt": "2026-04-25T09:35:05.176Z"
+    },
+    {
+      "scope": "specific",
+      "affectedDsDivisions": [],
+      "affectedGnDivisions": [],
+      "_id": "69ec8ac9137d2e7fb5e632c6",
+      "projectName": "වැල්ලවාය ජල සැපයුම් ව්‍යාපෘතිය",
+      "description": "වැල්ලවාය ප්‍රදේශයේ ජලය සැපයීම සඳහා නල ජලය සංවර්ධන ව්‍යාපෘතියක් ක්‍රියාත්මක කිරීම.",
+      "districtId": {
+        "_id": "69ec8a60137d2e7fb5e6302e",
+        "name": "Monaragala",
+        "nameSi": "මොනරාගල"
+      },
+      "dsDivisionId": {
+        "_id": "69ec8a62137d2e7fb5e63034",
+        "name": "Wellawaya",
+        "nameSi": "වැල්ලවාය"
+      },
+      "gnDivisionId": {
+        "_id": "69ec8a88137d2e7fb5e630cc",
+        "name": "Randeniya",
+        "nameSi": "රන්දෙනිය"
+      },
+      "latitude": 6.7275,
+      "longitude": 81.1026,
+      "startDate": "2025-03-01T00:00:00.000Z",
+      "endDate": "2026-03-31T00:00:00.000Z",
+      "status": "planned",
+      "images": [],
+      "estimatedAmount": 45000000,
+      "progress": 0,
+      "__v": 0,
+      "createdAt": "2026-04-25T09:35:05.176Z",
+      "updatedAt": "2026-04-25T09:35:05.176Z"
+    },
+    {
+      "scope": "specific",
+      "affectedDsDivisions": [],
+      "affectedGnDivisions": [],
+      "_id": "69ec8ac9137d2e7fb5e632c7",
+      "projectName": "කතරගම සංචාරක යටිතල පහසුකම් සංවර්ධනය",
+      "description": "කතරගම ශ්‍රී දේවාලය ඉදිරිපිට ඇති සංචාරක යටිතල පහසුකම් නූතනීකරණය.",
+      "districtId": {
+        "_id": "69ec8a60137d2e7fb5e6302e",
+        "name": "Monaragala",
+        "nameSi": "මොනරාගල"
+      },
+      "dsDivisionId": {
+        "_id": "69ec8a62137d2e7fb5e63038",
+        "name": "Kataragama",
+        "nameSi": "කතරගම"
+      },
+      "gnDivisionId": {
+        "_id": "69ec8aa1137d2e7fb5e63164",
+        "name": "Karawile",
+        "nameSi": "කරවිලේ"
+      },
+      "latitude": 6.4138,
+      "longitude": 81.3366,
+      "startDate": "2024-07-01T00:00:00.000Z",
+      "endDate": "2025-06-30T00:00:00.000Z",
+      "status": "ongoing",
+      "images": [],
+      "estimatedAmount": 12000000,
+      "progress": 30,
+      "__v": 0,
+      "createdAt": "2026-04-25T09:35:05.176Z",
+      "updatedAt": "2026-04-25T09:35:05.176Z"
+    },
+    {
+      "scope": "specific",
+      "affectedDsDivisions": [],
+      "affectedGnDivisions": [],
+      "_id": "69ec8ac9137d2e7fb5e632c4",
+      "projectName": "මොනරාගල ප්‍රධාන පාර ප්‍රතිසංස්කරණ ව්‍යාපෘතිය",
+      "description": "මොනරාගල නගරයේ ප්‍රධාන පාර ප්‍රතිසංස්කරණය සහ ජලාපවහන පද්ධතිය නවීකරණය කිරීම.",
+      "districtId": {
+        "_id": "69ec8a60137d2e7fb5e6302e",
+        "name": "Monaragala",
+        "nameSi": "මොනරාගල"
+      },
+      "dsDivisionId": {
+        "_id": "69ec8a60137d2e7fb5e63030",
+        "name": "Monaragala",
+        "nameSi": "මොනරාගල"
+      },
+      "gnDivisionId": {
+        "_id": "69ec8a67137d2e7fb5e63046",
+        "name": "Tenwatta",
+        "nameSi": "ටැංවත්ත"
+      },
+      "latitude": 6.8722,
+      "longitude": 81.3498,
+      "startDate": "2024-01-15T00:00:00.000Z",
+      "endDate": "2024-12-31T00:00:00.000Z",
+      "status": "ongoing",
+      "images": [],
+      "estimatedAmount": 25000000,
+      "progress": 70,
+      "__v": 0,
+      "createdAt": "2026-04-25T09:35:05.174Z",
+      "updatedAt": "2026-04-26T13:42:45.723Z"
+    }
+  ]
+}

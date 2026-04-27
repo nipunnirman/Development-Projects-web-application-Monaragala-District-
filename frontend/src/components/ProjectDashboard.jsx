@@ -21,7 +21,7 @@ export default function ProjectDashboard({ projects }) {
     const map = {};
     let idx = 0;
     projects.forEach(p => {
-      const dsName = p.dsDivisionId?.name || p.dsDivisionId?.nameSi || 'Unknown';
+      const dsName = p.dsDivisionId?.name || p.dsDivisionId?.nameSi || 'පොදු ව්‍යාපෘති (Public Projects)';
       if (!map[dsName]) {
         map[dsName] = COLORS[idx % COLORS.length];
         idx++;
@@ -53,8 +53,8 @@ export default function ProjectDashboard({ projects }) {
     const areaMap = {};
     displayedProjects.forEach(p => {
       const areaObj = groupBy === 'ds' ? p.dsDivisionId : p.gnDivisionId;
-      const areaName = areaObj?.name || areaObj?.nameSi || 'Unknown';
-      const parentDS = p.dsDivisionId?.name || p.dsDivisionId?.nameSi || 'Unknown';
+      const areaName = areaObj?.name || areaObj?.nameSi || 'පොදු ව්‍යාපෘති (Public Projects)';
+      const parentDS = p.dsDivisionId?.name || p.dsDivisionId?.nameSi || 'පොදු ව්‍යාපෘති (Public Projects)';
       
       if (!areaMap[areaName]) {
         areaMap[areaName] = { name: areaName, count: 0, value: 0, parentDS };
@@ -85,7 +85,7 @@ export default function ProjectDashboard({ projects }) {
       if (selectedFilter.value === 'Other Areas') return [];
       return displayedProjects.filter(p => {
         const areaObj = groupBy === 'ds' ? p.dsDivisionId : p.gnDivisionId;
-        const areaName = areaObj?.name || areaObj?.nameSi || 'Unknown';
+        const areaName = areaObj?.name || areaObj?.nameSi || 'පොදු ව්‍යාපෘති (Public Projects)';
         return areaName === selectedFilter.value;
       });
     } else if (selectedFilter.type === 'status') {

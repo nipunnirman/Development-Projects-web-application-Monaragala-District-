@@ -12,14 +12,28 @@ router.get('/', async (req, res) => {
     const filter = {};
 
     if (district) filter.districtId = district;
-    if (ds) filter.dsDivisionId = ds;
-    if (gn) filter.gnDivisionId = gn;
+
+    if (ds === 'public') {
+      filter.scope = 'public';
+    } else if (gn) {
+      filter.gnDivisionId = gn;
+    } else if (ds) {
+      filter.dsDivisionId = ds;
+      // Do not force "specific" if we only want to match the division
+      // If we want to return BOTH 'specific' AND 'public' projects that affect this DS?
+      // Wait, if a project is public, it passes through multiple DS's via `affectedDsDivisions`.
+    }
+
+    // No DS/GN filter → show ALL projects (specific + public)
+
     if (status) filter.status = status;
 
     const projects = await Project.find(filter)
       .populate('districtId', 'name nameSi')
       .populate('dsDivisionId', 'name nameSi')
       .populate('gnDivisionId', 'name nameSi')
+      .populate('affectedDsDivisions', 'name nameSi')
+      .populate('affectedGnDivisions', 'name nameSi')
       .sort({ createdAt: -1 });
 
     res.json({ success: true, count: projects.length, data: projects });

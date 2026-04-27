@@ -191,3 +191,38 @@
 .modal-progress-bar-fill.progress-planned { background: linear-gradient(90deg, #60A5FA, #2563EB); }
 .modal-progress-bar-fill.progress-ongoing { background: linear-gradient(90deg, #FBBF24, #D97706); }
 .modal-progress-bar-fill.progress-completed { background: linear-gradient(90deg, #34D399, #059669); }
+
+/* ── Public project: affected divisions ── */
+.modal-public-divisions {
+  padding: 12px;
+  background: #F5F3FF;
+  border-radius: 8px;
+  border: 1px solid #DDD6FE;
+}
+
+.modal-public-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #6D28D9;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+  font-family: 'Noto Sans Sinhala', sans-serif;
+}
+
+.modal-affected-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.affected-tag {
+  background: #EDE9FE;
+  color: #5B21B6;
+  border: 1px solid #C4B5FD;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: 'Noto Sans Sinhala', sans-serif;
+}

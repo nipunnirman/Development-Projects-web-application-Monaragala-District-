@@ -117,3 +117,16 @@
 .progress-planned { background: linear-gradient(90deg, #60A5FA, #2563EB); }
 .progress-ongoing { background: linear-gradient(90deg, #FBBF24, #D97706); }
 .progress-completed { background: linear-gradient(90deg, #34D399, #059669); }
+
+/* ── Public scope badge ── */
+.badge-public {
+  background: #EDE9FE;
+  color: #6D28D9;
+  border: 1px solid #C4B5FD;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-family: 'Noto Sans Sinhala', sans-serif;
+  letter-spacing: 0.02em;
+}

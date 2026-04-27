@@ -61,6 +61,7 @@ export default function FilterPanel({ onFilter }) {
           <label className="form-label">DS Division</label>
           <select className="form-select" value={ds} onChange={handleDs} disabled={!district}>
             <option value="">All DS Divisions</option>
+            <option value="public">පොදු ව්‍යාපෘති (Public Projects)</option>
             {dsDivisions.map(d => (
               <option key={d._id} value={d._id}>{d.nameSi} ({d.name})</option>
             ))}

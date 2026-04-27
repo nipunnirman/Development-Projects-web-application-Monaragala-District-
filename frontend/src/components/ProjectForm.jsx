@@ -6,7 +6,10 @@ import './ProjectForm.css';
 
 const EMPTY = {
   projectName: '', description: '',
+  scope: 'specific',                  // 'specific' | 'public'
   districtId: '', dsDivisionId: '', gnDivisionId: '',
+  affectedDsDivisions: [],            // for public scope
+  affectedGnDivisions: [],            // for public scope
   latitude: '', longitude: '',
   startDate: '', endDate: '', status: 'planned',
   estimatedAmount: '',
@@ -17,11 +20,11 @@ const toDateInput = d => d ? new Date(d).toISOString().split('T')[0] : '';
 
 export default function ProjectForm({ project, onSuccess, onClose }) {
   const isEdit = !!project;
-  const [form, setForm] = useState(EMPTY);
+  const [form, setForm]       = useState(EMPTY);
   const [dmsInput, setDmsInput] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError]     = useState('');
   const { districts, dsDivisions, gnDivisions, loadDs, loadGn } = useLocations();
 
   useEffect(() => {
@@ -29,9 +32,12 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
       setForm({
         projectName: project.projectName || '',
         description: project.description || '',
+        scope: project.scope || 'specific',
         districtId:   project.districtId?._id || project.districtId || '',
         dsDivisionId: project.dsDivisionId?._id || project.dsDivisionId || '',
         gnDivisionId: project.gnDivisionId?._id || project.gnDivisionId || '',
+        affectedDsDivisions: (project.affectedDsDivisions || []).map(d => d._id || d),
+        affectedGnDivisions: (project.affectedGnDivisions || []).map(g => g._id || g),
         latitude:  project.latitude ?? '',
         longitude: project.longitude ?? '',
         startDate: toDateInput(project.startDate),
@@ -47,7 +53,6 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
         });
       }
     } else if (districts.length > 0 && !form.districtId) {
-      // Auto-select the first district (Monaragala) since this system is exclusive to it
       const defaultD = districts[0];
       setForm(f => ({ ...f, districtId: defaultD._id }));
       loadDs(defaultD._id);
@@ -55,12 +60,6 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
   }, [project, districts]);
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
-
-  const handleDistrict = async e => {
-    const v = e.target.value;
-    set('districtId', v); set('dsDivisionId', ''); set('gnDivisionId', '');
-    await loadDs(v);
-  };
 
   const handleDs = async e => {
     const v = e.target.value;
@@ -72,7 +71,6 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
     const val = e.target.value;
     setDmsInput(val);
     if (!val.trim()) return;
-
     const { lat, lng } = parseDMS(val);
     if (lat !== null && lng !== null) {
       set('latitude', lat);
@@ -80,16 +78,35 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
     }
   };
 
+  // Toggle DS division in the affectedDsDivisions array (for public scope)
+  const toggleAffectedDs = (dsId) => {
+    setForm(f => {
+      const arr = f.affectedDsDivisions;
+      return {
+        ...f,
+        affectedDsDivisions: arr.includes(dsId)
+          ? arr.filter(id => id !== dsId)
+          : [...arr, dsId],
+      };
+    });
+  };
+
   const handleSubmit = async e => {
     e.preventDefault();
     setLoading(true); setError('');
     try {
+      const isPublic = form.scope === 'public';
       const payload = {
         ...form,
         latitude:  form.latitude  !== '' ? Number(form.latitude)  : null,
         longitude: form.longitude !== '' ? Number(form.longitude) : null,
         estimatedAmount: form.estimatedAmount !== '' ? Number(form.estimatedAmount) * 1000000 : 0,
         progress: Number(form.progress) || 0,
+        // For public projects, clear the specific division fields
+        dsDivisionId: isPublic ? null : form.dsDivisionId,
+        gnDivisionId: isPublic ? null : form.gnDivisionId,
+        affectedDsDivisions: isPublic ? form.affectedDsDivisions : [],
+        affectedGnDivisions: [],
       };
       let result;
       if (isEdit) {
@@ -99,14 +116,10 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
         const { data } = await createProject(payload);
         result = data.data;
       }
-
-      // Handle Image Upload
       if (selectedFile) {
-        setLoading(true); // Keep loading while uploading image
         const uploadRes = await uploadProjectImage(result._id, selectedFile);
         result = uploadRes.data.data;
       }
-
       onSuccess(result, isEdit);
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to save project. Try again.');
@@ -114,6 +127,8 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
       setLoading(false);
     }
   };
+
+  const isPublic = form.scope === 'public';
 
   return (
     <div className="form-overlay">
@@ -126,6 +141,36 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
         {error && <div className="alert alert-error" style={{ margin: '0 24px' }}>{error}</div>}
 
         <form className="form-modal-body" onSubmit={handleSubmit}>
+
+          {/* ── Project Scope Toggle ── */}
+          <div className="form-section">
+            <div className="form-section-title">ව්‍යාපෘති වර්ගය / Project Scope</div>
+            <div className="scope-toggle">
+              <button
+                type="button"
+                className={`scope-btn ${!isPublic ? 'scope-btn-active' : ''}`}
+                onClick={() => set('scope', 'specific')}
+              >
+                <span className="scope-icon">📍</span>
+                <div>
+                  <div className="scope-title">නිශ්චිත ස්ථානය</div>
+                  <div className="scope-sub">Specific DS/GN Division</div>
+                </div>
+              </button>
+              <button
+                type="button"
+                className={`scope-btn ${isPublic ? 'scope-btn-active scope-btn-public' : ''}`}
+                onClick={() => set('scope', 'public')}
+              >
+                <span className="scope-icon">🛣️</span>
+                <div>
+                  <div className="scope-title">පොදු ව්‍යාපෘතිය</div>
+                  <div className="scope-sub">District-wide / Multiple Divisions</div>
+                </div>
+              </button>
+            </div>
+          </div>
+
           {/* Project Info */}
           <div className="form-section">
             <div className="form-section-title">Project Details</div>
@@ -151,6 +196,7 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
                   required
                 />
               </div>
+              <div className="form-group">
                 <label className="form-label">Project Value / මුදල (Rs. Millions)</label>
                 <input
                   type="number"
@@ -160,6 +206,7 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
                   value={form.estimatedAmount}
                   onChange={e => set('estimatedAmount', e.target.value)}
                 />
+              </div>
             </div>
           </div>
 
@@ -168,9 +215,9 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
             <div className="form-section-title">Project Photo (Optional)</div>
             <div className="form-group">
               <label className="form-label">Upload New Photo</label>
-              <input 
-                type="file" 
-                className="form-input" 
+              <input
+                type="file"
+                className="form-input"
                 accept="image/*"
                 onChange={e => setSelectedFile(e.target.files[0])}
               />
@@ -180,29 +227,58 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
             </div>
           </div>
 
-          {/* Location */}
+          {/* Location — different UI for specific vs public */}
           <div className="form-section">
-            <div className="form-section-title">Location Hierarchy</div>
-            <div className="form-grid">
-              <div className="form-group">
-                <label className="form-label">DS Division *</label>
-                <select className="form-select" value={form.dsDivisionId} onChange={handleDs} required disabled={!form.districtId}>
-                  <option value="">Select DS Division</option>
-                  {dsDivisions.map(d => (
-                    <option key={d._id} value={d._id}>{d.nameSi} ({d.name})</option>
-                  ))}
-                </select>
-              </div>
-              <div className="form-group">
-                <label className="form-label">GN Division *</label>
-                <select className="form-select" value={form.gnDivisionId} onChange={e => set('gnDivisionId', e.target.value)} required disabled={!form.dsDivisionId}>
-                  <option value="">Select GN Division</option>
-                  {gnDivisions.map(g => (
-                    <option key={g._id} value={g._id}>{g.nameSi} ({g.name})</option>
-                  ))}
-                </select>
-              </div>
+            <div className="form-section-title">
+              {isPublic ? 'බලපෑම් ලද ප්‍රාදේශීය ලේකම් කොට්ඨාශ / Affected DS Divisions' : 'Location Hierarchy'}
             </div>
+
+            {isPublic ? (
+              /* Public scope — checkbox list of DS divisions */
+              <div>
+                <p style={{fontSize:'0.82rem', color:'var(--slate-lt)', marginBottom:12}}>
+                  🛣️ මෙම ව්‍යාපෘතිය ගමන් කරන ප්‍රාදේශීය ලේකම් කොට්ඨාශ තෝරන්න
+                </p>
+                {dsDivisions.length === 0 && (
+                  <p style={{color:'var(--slate-lt)', fontSize:'0.85rem'}}>Loading divisions…</p>
+                )}
+                <div className="affected-ds-grid">
+                  {dsDivisions.map(ds => (
+                    <label key={ds._id} className={`affected-ds-item ${form.affectedDsDivisions.includes(ds._id) ? 'affected-active' : ''}`}>
+                      <input
+                        type="checkbox"
+                        checked={form.affectedDsDivisions.includes(ds._id)}
+                        onChange={() => toggleAffectedDs(ds._id)}
+                      />
+                      <span>{ds.nameSi}</span>
+                      <span className="affected-ds-sub">{ds.name}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              /* Specific scope — single DS + GN select */
+              <div className="form-grid">
+                <div className="form-group">
+                  <label className="form-label">DS Division *</label>
+                  <select className="form-select" value={form.dsDivisionId} onChange={handleDs} required={!isPublic} disabled={!form.districtId}>
+                    <option value="">Select DS Division</option>
+                    {dsDivisions.map(d => (
+                      <option key={d._id} value={d._id}>{d.nameSi} ({d.name})</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label className="form-label">GN Division *</label>
+                  <select className="form-select" value={form.gnDivisionId} onChange={e => set('gnDivisionId', e.target.value)} required={!isPublic} disabled={!form.dsDivisionId}>
+                    <option value="">Select GN Division</option>
+                    {gnDivisions.map(g => (
+                      <option key={g._id} value={g._id}>{g.nameSi} ({g.name})</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Coordinates */}
@@ -226,7 +302,7 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
 
           {/* Timeline & Status */}
           <div className="form-section">
-            <div className="form-section-title">Timeline & Status</div>
+            <div className="form-section-title">Timeline &amp; Status</div>
             <div className="form-grid-3">
               <div className="form-group">
                 <label className="form-label">Start Date *</label>
@@ -250,16 +326,12 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
               <input
                 type="range"
                 className="form-range"
-                min="0"
-                max="100"
-                step="5"
+                min="0" max="100" step="5"
                 value={form.progress}
                 onChange={e => set('progress', e.target.value)}
               />
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--slate-lt)' }}>
-                <span>0%</span>
-                <span>50%</span>
-                <span>100%</span>
+                <span>0%</span><span>50%</span><span>100%</span>
               </div>
             </div>
           </div>

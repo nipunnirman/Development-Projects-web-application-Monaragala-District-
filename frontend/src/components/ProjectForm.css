@@ -129,3 +129,81 @@
   transform: scale(1.1);
 }
 
+/* ── Scope Toggle ── */
+.scope-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.scope-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  border: 2px solid var(--cream-dark);
+  background: var(--white);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.scope-btn:hover { border-color: var(--navy); background: var(--cream); }
+
+.scope-btn-active {
+  border-color: var(--navy);
+  background: var(--navy);
+  color: var(--white);
+}
+
+.scope-btn-active.scope-btn-public {
+  border-color: #7C3AED;
+  background: #7C3AED;
+}
+
+.scope-icon { font-size: 1.5rem; }
+
+.scope-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: 'Noto Sans Sinhala', sans-serif;
+}
+
+.scope-sub {
+  font-size: 0.72rem;
+  opacity: 0.7;
+  margin-top: 2px;
+}
+
+/* ── Affected DS Checkboxes ── */
+.affected-ds-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.affected-ds-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 1.5px solid var(--cream-dark);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-size: 0.83rem;
+  font-family: 'Noto Sans Sinhala', sans-serif;
+}
+
+.affected-ds-item:hover { border-color: #7C3AED; background: #F5F3FF; }
+.affected-ds-item.affected-active { border-color: #7C3AED; background: #EDE9FE; color: #5B21B6; font-weight: 600; }
+.affected-ds-item input[type="checkbox"] { accent-color: #7C3AED; width: 15px; height: 15px; }
+
+.affected-ds-sub {
+  font-size: 0.7rem;
+  opacity: 0.6;
+  margin-left: auto;
+  font-family: sans-serif;
+}

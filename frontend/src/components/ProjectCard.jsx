@@ -13,7 +13,7 @@ const STATUS_SI = {
 };
 
 export default function ProjectCard({ project, onClick }) {
-  const { projectName, description, status, startDate, endDate, districtId, dsDivisionId, gnDivisionId } = project;
+  const { projectName, description, status, startDate, endDate, districtId, dsDivisionId, gnDivisionId, scope, affectedDsDivisions } = project;
 
   const fmt = d => d ? new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '—';
   const fmtCurrency = val => val ? `Rs. ${(val/1000000).toFixed(1)}M` : '';
@@ -23,10 +23,15 @@ export default function ProjectCard({ project, onClick }) {
       <div className={`project-card-accent status-${status}`} />
       <div className="card-body">
         <div className="project-card-header">
-          <span className={`badge badge-${status}`}>
-            <span className="badge-dot" />
-            {STATUS_LABELS[status]}
-          </span>
+          <div style={{ display: 'flex', gap: '6px', alignItems: 'center', flexWrap: 'wrap' }}>
+            <span className={`badge badge-${status}`}>
+              <span className="badge-dot" />
+              {STATUS_LABELS[status]}
+            </span>
+            {scope === 'public' && (
+              <span className="badge badge-public">🚣ટ૧ાદુ</span>
+            )}
+          </div>
           <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
             {project.estimatedAmount > 0 && (
               <span className="project-card-value">{fmtCurrency(project.estimatedAmount)}</span>
@@ -50,11 +55,21 @@ export default function ProjectCard({ project, onClick }) {
 
         <div className="project-card-location">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span className="sinhala">{gnDivisionId?.nameSi || gnDivisionId?.name}</span>
-          <span className="sep">·</span>
-          <span className="sinhala">{dsDivisionId?.nameSi || dsDivisionId?.name}</span>
-          <span className="sep">·</span>
-          <span className="sinhala">{districtId?.nameSi || districtId?.name}</span>
+          {scope === 'public' ? (
+            <span className="sinhala" style={{color:'#7C3AED', fontWeight:600}}>
+              {affectedDsDivisions?.length > 0
+                ? affectedDsDivisions.map(d => d.nameSi || d.name).join(' · ')
+                : 'පොදු ව්‍යාපෘතිය'}
+            </span>
+          ) : (
+            <>
+              <span className="sinhala">{gnDivisionId?.nameSi || gnDivisionId?.name}</span>
+              <span className="sep">·</span>
+              <span className="sinhala">{dsDivisionId?.nameSi || dsDivisionId?.name}</span>
+              <span className="sep">·</span>
+              <span className="sinhala">{districtId?.nameSi || districtId?.name}</span>
+            </>
+          )}
         </div>
 
         <div className="project-card-timeline">

@@ -29,7 +29,12 @@ export default function ProjectModal({ project, onClose }) {
 
         <div className="modal-header">
           <div>
-            <span className={`badge badge-${project.status}`}>{STATUS_LABELS[project.status]}</span>
+            <div style={{display:'flex', gap:'8px', alignItems:'center', flexWrap:'wrap', marginBottom:4}}>
+              <span className={`badge badge-${project.status}`}>{STATUS_LABELS[project.status]}</span>
+              {project.scope === 'public' && (
+                <span className="badge badge-public">🚣පොදු</span>
+              )}
+            </div>
             <h2 className="modal-title sinhala">{project.projectName}</h2>
           </div>
           <button className="modal-close" onClick={onClose}>✕</button>
@@ -53,21 +58,35 @@ export default function ProjectModal({ project, onClose }) {
 
           <div className="modal-grid">
             <section className="modal-section">
-              <div className="modal-section-label">Location / ස්ථානය</div>
-              <div className="modal-location-row">
-                <div className="modal-loc-item">
-                  <span className="loc-label">District</span>
-                  <span className="sinhala">{project.districtId?.nameSi} ({project.districtId?.name})</span>
+              <div className="modal-section-label">Location / ස්‍ථානය</div>
+              {project.scope === 'public' ? (
+                <div className="modal-public-divisions">
+                  <div className="modal-public-label">🚣 බලපාම් ලද ප්‍රාදේශීය ලේකම් කොට්ඨාශ</div>
+                  <div className="modal-affected-tags">
+                    {(project.affectedDsDivisions || []).map(d => (
+                      <span key={d._id || d} className="affected-tag">{d.nameSi || d.name || d}</span>
+                    ))}
+                    {(!project.affectedDsDivisions || project.affectedDsDivisions.length === 0) && (
+                      <span className="sinhala" style={{color:'var(--slate-lt)'}}>--</span>
+                    )}
+                  </div>
                 </div>
-                <div className="modal-loc-item">
-                  <span className="loc-label">DS Division</span>
-                  <span className="sinhala">{project.dsDivisionId?.nameSi} ({project.dsDivisionId?.name})</span>
+              ) : (
+                <div className="modal-location-row">
+                  <div className="modal-loc-item">
+                    <span className="loc-label">District</span>
+                    <span className="sinhala">{project.districtId?.nameSi} ({project.districtId?.name})</span>
+                  </div>
+                  <div className="modal-loc-item">
+                    <span className="loc-label">DS Division</span>
+                    <span className="sinhala">{project.dsDivisionId?.nameSi} ({project.dsDivisionId?.name})</span>
+                  </div>
+                  <div className="modal-loc-item">
+                    <span className="loc-label">GN Division</span>
+                    <span className="sinhala">{project.gnDivisionId?.nameSi} ({project.gnDivisionId?.name})</span>
+                  </div>
                 </div>
-                <div className="modal-loc-item">
-                  <span className="loc-label">GN Division</span>
-                  <span className="sinhala">{project.gnDivisionId?.nameSi} ({project.gnDivisionId?.name})</span>
-                </div>
-              </div>
+              )}
             </section>
 
             <section className="modal-section">

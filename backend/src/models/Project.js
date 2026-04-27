@@ -11,21 +11,38 @@ const projectSchema = new mongoose.Schema({
     required: [true, 'Description is required'],
     trim: true,
   },
+  // scope: 'specific' = belongs to one DS/GN | 'public' = district-wide (e.g. roads crossing many divisions)
+  scope: {
+    type: String,
+    enum: ['specific', 'public'],
+    default: 'specific',
+  },
   districtId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'District',
     required: [true, 'District is required'],
   },
+  // Required only for scope=specific
   dsDivisionId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'DsDivision',
-    required: [true, 'DS Division is required'],
+    default: null,
   },
   gnDivisionId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'GnDivision',
-    required: [true, 'GN Division is required'],
+    default: null,
   },
+  // For scope=public: list of DS divisions this project passes through
+  affectedDsDivisions: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'DsDivision',
+  }],
+  // For scope=public: list of GN divisions this project passes through (optional)
+  affectedGnDivisions: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'GnDivision',
+  }],
   latitude: {
     type: Number,
     default: null,
