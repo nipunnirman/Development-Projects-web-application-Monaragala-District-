@@ -107,6 +107,8 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
         gnDivisionId: isPublic ? null : form.gnDivisionId,
         affectedDsDivisions: isPublic ? form.affectedDsDivisions : [],
         affectedGnDivisions: [],
+        startDate: form.startDate || null,
+        endDate: form.endDate || null,
       };
       let result;
       if (isEdit) {
@@ -305,12 +307,12 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
             <div className="form-section-title">Timeline &amp; Status</div>
             <div className="form-grid-3">
               <div className="form-group">
-                <label className="form-label">Start Date *</label>
-                <input type="date" className="form-input" value={form.startDate} onChange={e => set('startDate', e.target.value)} required />
+                <label className="form-label">Start Date</label>
+                <input type="date" className="form-input" value={form.startDate} onChange={e => set('startDate', e.target.value)} />
               </div>
               <div className="form-group">
-                <label className="form-label">End Date *</label>
-                <input type="date" className="form-input" value={form.endDate} onChange={e => set('endDate', e.target.value)} required />
+                <label className="form-label">End Date</label>
+                <input type="date" className="form-input" value={form.endDate} onChange={e => set('endDate', e.target.value)} />
               </div>
               <div className="form-group">
                 <label className="form-label">Status *</label>

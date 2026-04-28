@@ -53,11 +53,11 @@ const projectSchema = new mongoose.Schema({
   },
   startDate: {
     type: Date,
-    required: [true, 'Start date is required'],
+    default: null,
   },
   endDate: {
     type: Date,
-    required: [true, 'End date is required'],
+    default: null,
   },
   status: {
     type: String,
