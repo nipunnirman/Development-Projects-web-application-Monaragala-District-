@@ -307,11 +307,17 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
             <div className="form-section-title">Timeline &amp; Status</div>
             <div className="form-grid-3">
               <div className="form-group">
-                <label className="form-label">Start Date</label>
+                <div className="label-with-action">
+                  <label className="form-label">Start Date</label>
+                  {form.startDate && <button type="button" className="text-btn-xs" onClick={() => set('startDate', '')}>Clear</button>}
+                </div>
                 <input type="date" className="form-input" value={form.startDate} onChange={e => set('startDate', e.target.value)} />
               </div>
               <div className="form-group">
-                <label className="form-label">End Date</label>
+                <div className="label-with-action">
+                  <label className="form-label">End Date</label>
+                  {form.endDate && <button type="button" className="text-btn-xs" onClick={() => set('endDate', '')}>Clear</button>}
+                </div>
                 <input type="date" className="form-input" value={form.endDate} onChange={e => set('endDate', e.target.value)} />
               </div>
               <div className="form-group">

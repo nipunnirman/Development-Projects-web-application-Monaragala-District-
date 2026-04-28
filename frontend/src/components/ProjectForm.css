@@ -202,8 +202,33 @@
 .affected-ds-item input[type="checkbox"] { accent-color: #7C3AED; width: 15px; height: 15px; }
 
 .affected-ds-sub {
-  font-size: 0.7rem;
   opacity: 0.6;
   margin-left: auto;
   font-family: sans-serif;
 }
+
+.label-with-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.text-btn-xs {
+  background: none;
+  border: none;
+  color: var(--gold-dim);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.text-btn-xs:hover {
+  background: var(--cream);
+  color: var(--navy);
+}
+
