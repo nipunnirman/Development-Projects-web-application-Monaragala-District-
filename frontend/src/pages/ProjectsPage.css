@@ -122,9 +122,8 @@
   background: var(--white);
   border-bottom: 1px solid var(--cream-dark);
   padding: 14px 0;
-  position: sticky;
-  top: 64px;
-  z-index: 100;
+  position: relative;
+  z-index: 10;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
@@ -490,7 +489,7 @@
   }
 
   .ds-filter-bar {
-    top: 56px;
+    top: auto;
   }
 
   .projects-hero-inner {
