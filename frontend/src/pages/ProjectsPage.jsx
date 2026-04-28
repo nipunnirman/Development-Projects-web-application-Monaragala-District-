@@ -227,15 +227,15 @@ export default function ProjectsPage() {
           </span>
           <div className="view-toggle">
             <button className={`toggle-btn ${view === 'grid' ? 'active' : ''}`} onClick={() => setView('grid')}>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></svg>
               ග්‍රිඩ්
             </button>
             <button className={`toggle-btn ${view === 'map' ? 'active' : ''}`} onClick={() => setView('map')}>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" /><line x1="8" y1="2" x2="8" y2="18" /><line x1="16" y1="6" x2="16" y2="22" /></svg>
               සිතියම
             </button>
             <button className={`toggle-btn ${view === 'dashboard' ? 'active' : ''}`} onClick={() => setView('dashboard')}>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83M22 12A10 10 0 0 0 12 2v10z"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83M22 12A10 10 0 0 0 12 2v10z" /></svg>
               උපකරණ පුවරු
             </button>
           </div>
@@ -245,8 +245,8 @@ export default function ProjectsPage() {
         {!loading && projects.length > 0 && (() => {
           const totalValue = projects.reduce((s, p) => s + (Number(p.estimatedAmount) || 0), 0);
           const totalMillion = totalValue / 1_000_000;
-          const planned   = projects.filter(p => p.status === 'planned').length;
-          const ongoing   = projects.filter(p => p.status === 'ongoing').length;
+          const planned = projects.filter(p => p.status === 'planned').length;
+          const ongoing = projects.filter(p => p.status === 'ongoing').length;
           const completed = projects.filter(p => p.status === 'completed').length;
           return (
             <div className="summary-card">
@@ -295,7 +295,7 @@ export default function ProjectsPage() {
           <ProjectDashboard projects={projects} />
         ) : projects.length === 0 ? (
           <div className="no-results">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
             <h3>ව්‍යාපෘති හමු නොවීය</h3>
             <p>වෙනත් ප්‍රාදේශීය ලේකම් කොට්ඨාශයක් හෝ තත්ත්වයක් තෝරන්න.</p>
           </div>

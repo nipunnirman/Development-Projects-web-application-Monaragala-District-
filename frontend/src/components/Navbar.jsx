@@ -12,13 +12,8 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="container navbar-inner">
-        <Link to="/" className="navbar-brand">
-          <span className="navbar-flag">🇱🇰</span>
-          <div>
-            <div className="navbar-title">සංවර්ධන ද්වාරය</div>
-            <div className="navbar-subtitle">Development Portal</div>
-          </div>
-        </Link>
+        {/* Brand section removed in favor of TopHeader */}
+        <div></div>
 
         <div className="navbar-links">
 
