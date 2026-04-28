@@ -59,7 +59,7 @@
 .nav-link:hover { color: var(--white); background: rgba(255,255,255,.08); }
 .nav-link.active { color: var(--gold-light); font-weight: 600; }
 
-@media (max-width: 600px) {
-  .navbar-subtitle { display: none; }
-  .navbar-title { font-size: .78rem; }
+@media (max-width: 768px) {
+  .navbar { height: 2px !important; min-height: 2px !important; border-bottom: none; box-shadow: none; }
+  .navbar-inner { display: none !important; }
 }
