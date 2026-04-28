@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/Navbar';
+import TopHeader from './components/TopHeader';
 import Footer from './components/Footer';
 import ProjectsPage from './pages/ProjectsPage';
 import LoginPage from './pages/LoginPage';
@@ -12,6 +13,7 @@ export default function App() {
     <AuthProvider>
       <BrowserRouter>
         <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+          <TopHeader />
           <Navbar />
           <div style={{ flex: 1 }}>
             <Routes>
