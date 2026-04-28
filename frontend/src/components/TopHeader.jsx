@@ -8,7 +8,7 @@ export default function TopHeader() {
         <div className="top-header-left">
           <img src="/Emblem_of_Sri_Lanka.svg.png" alt="Sri Lanka Emblem" className="emblem-img" />
         </div>
-        
+
         <div className="top-header-center">
           <div className="official-text">
             <h1 className="sinhala">දිස්ත්‍රික් සංවර්ධන කමිටු සභාපති කාර්යාලය</h1>
@@ -17,7 +17,7 @@ export default function TopHeader() {
             <div className="english-sub">Monaragala</div>
           </div>
         </div>
-        
+
         <div className="top-header-right">
           <div className="secretary-profile">
             <div className="photo-frame">
