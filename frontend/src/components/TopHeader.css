@@ -113,27 +113,30 @@
   .top-header-inner {
     flex-direction: row !important;
     justify-content: center;
-    gap: 12px;
-    padding: 10px 16px;
+    gap: 8px;
+    padding: 8px 12px;
     max-width: 500px;
     margin: 0 auto;
   }
 
   .emblem-img {
-    height: 50px;
+    height: 38px;
   }
 
   .photo-frame {
-    width: 55px;
-    height: 55px;
+    width: 42px;
+    height: 42px;
+    border-width: 2px;
   }
 
   .official-text h1 {
-    font-size: 0.95rem;
+    font-size: 0.8rem;
+    margin-bottom: 0px;
   }
 
   .official-text h2 {
-    font-size: 0.85rem;
+    font-size: 0.7rem;
+    margin-bottom: 0px;
   }
 
   .english-text,
