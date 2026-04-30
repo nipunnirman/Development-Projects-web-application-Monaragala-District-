@@ -11,7 +11,7 @@ export default function TopHeader() {
 
         <div className="top-header-center">
           <div className="official-text">
-            <h1 className="sinhala">දිස්ත්‍රික් සංවර්ධන කමිටු සභාපති කාර්යාලය</h1>
+            <h1 className="sinhala">දිස්ත්‍රික් සම්බන්ධීකරණ කමිටු සභාපති කාර්යාලය</h1>
             <h2 className="sinhala-sub">මොණරාගල</h2>
             <div className="english-text">District Development Committee Chairman's Office</div>
             <div className="english-sub">Monaragala</div>
