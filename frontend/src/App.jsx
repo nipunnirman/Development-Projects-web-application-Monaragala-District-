@@ -23,6 +23,29 @@ export default function App() {
             </Routes>
           </div>
           <Footer />
+          <a
+            href="tel:0552276769"
+            style={{
+              position: 'fixed',
+              bottom: '30px',
+              right: '30px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#ffffff',
+              width: '56px',
+              height: '56px',
+              borderRadius: '50%',
+              boxShadow: '0 6px 16px rgba(0,0,0,0.2)',
+              zIndex: 9999,
+              border: '2px solid var(--gold-dim)',
+              transition: 'transform 0.2s',
+            }}
+            onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.1)')}
+            onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+          >
+            <img src="/Phone_icon.png" alt="Phone" style={{ width: '28px', height: '28px' }} />
+          </a>
         </div>
       </BrowserRouter>
     </AuthProvider>

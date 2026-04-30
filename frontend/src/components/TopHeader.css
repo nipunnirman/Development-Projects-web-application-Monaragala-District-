@@ -106,7 +106,10 @@
 }
 
 @media (max-width: 768px) {
-  .top-header { border-bottom: none; }
+  .top-header {
+    border-bottom: none;
+  }
+
   .top-header-inner {
     flex-direction: row !important;
     justify-content: center;

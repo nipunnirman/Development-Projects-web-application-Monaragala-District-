@@ -19,7 +19,7 @@ export default function ProjectModal({ project, onClose }) {
   if (!project) return null;
 
   const fmt = d => d ? new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : '—';
-  const fmtCurrency = val => val ? `Rs. ${(val/1000000).toFixed(2)} Million` : 'Not Specified';
+  const fmtCurrency = val => val ? `Rs. ${(val / 1000000).toFixed(2)} Million` : 'Not Specified';
   const hasCoords = project.latitude && project.longitude;
 
   return (
@@ -29,7 +29,7 @@ export default function ProjectModal({ project, onClose }) {
 
         <div className="modal-header">
           <div>
-            <div style={{display:'flex', gap:'8px', alignItems:'center', flexWrap:'wrap', marginBottom:4}}>
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap', marginBottom: 4 }}>
               <span className={`badge badge-${project.status}`}>{STATUS_LABELS[project.status]}</span>
               {project.scope === 'public' && (
                 <span className="badge badge-public">🚣පොදු</span>
@@ -67,7 +67,7 @@ export default function ProjectModal({ project, onClose }) {
                       <span key={d._id || d} className="affected-tag">{d.nameSi || d.name || d}</span>
                     ))}
                     {(!project.affectedDsDivisions || project.affectedDsDivisions.length === 0) && (
-                      <span className="sinhala" style={{color:'var(--slate-lt)'}}>--</span>
+                      <span className="sinhala" style={{ color: 'var(--slate-lt)' }}>--</span>
                     )}
                   </div>
                 </div>
