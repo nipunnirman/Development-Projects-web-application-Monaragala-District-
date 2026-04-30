@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import './ProjectModal.css';
 
-const STATUS_LABELS = { planned: 'Planned / සැලසුම් කළ', ongoing: 'Ongoing / සිදු වෙමින්', completed: 'Completed / සම්පූර්ණ' };
+const STATUS_LABELS = { planned: 'Planned / සැලසුම් කළ', ongoing: 'Ongoing / ක්රියාත්මක වෙමින්', completed: 'Completed / සම්පූර්ණ' };
 
 export default function ProjectModal({ project, onClose }) {
   const ref = useRef();
@@ -105,7 +105,7 @@ export default function ProjectModal({ project, onClose }) {
             </section>
 
             <section className="modal-section">
-              <div className="modal-section-label">Project Value / ව්‍යාපෘති මුදල</div>
+              <div className="modal-section-label">Project Value / ප්රතිපාදන මුදල</div>
               <div className="modal-value">
                 <span className="value-amount">{fmtCurrency(project.estimatedAmount)}</span>
               </div>

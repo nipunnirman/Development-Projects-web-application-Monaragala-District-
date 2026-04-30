@@ -199,7 +199,7 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
                 />
               </div>
               <div className="form-group">
-                <label className="form-label">Project Value / මුදල (Rs. Millions)</label>
+                <label className="form-label">Project Value / ප්රතිපාදන මුදල (Rs. Millions)</label>
                 <input
                   type="number"
                   step="any"
@@ -324,7 +324,7 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
                 <label className="form-label">Status *</label>
                 <select className="form-select" value={form.status} onChange={e => set('status', e.target.value)} required>
                   <option value="planned">Planned / සැලසුම් කළ</option>
-                  <option value="ongoing">Ongoing / සිදු වෙමින්</option>
+                  <option value="ongoing">Ongoing / ක්රියාත්මක වෙමින්</option>
                   <option value="completed">Completed / සම්පූර්ණ</option>
                 </select>
               </div>

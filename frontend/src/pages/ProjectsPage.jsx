@@ -44,9 +44,9 @@ const AnimatedNumber = ({ value }) => {
 };
 
 const STATUS_OPTIONS = [
-  { value: '', label: 'සියල්ල' },
+  { value: '', label: 'සමස්ථ' },
   { value: 'planned', label: 'සැලසුම් කළ' },
-  { value: 'ongoing', label: 'සිදු වෙමින්' },
+  { value: 'ongoing', label: 'ක්රියාත්මක වෙමින්' },
   { value: 'completed', label: 'සම්පූර්ණ' },
 ];
 
@@ -131,7 +131,7 @@ export default function ProjectsPage() {
               {[
                 { label: 'සම්පූර්ණ', value: counts.all, cls: '' },
                 { label: 'සැලසුම් කළ', value: counts.planned, cls: 'stat-planned' },
-                { label: 'සිදු වෙමින්', value: counts.ongoing, cls: 'stat-ongoing' },
+                { label: 'ක්රියාත්මක වෙමින්', value: counts.ongoing, cls: 'stat-ongoing' },
                 { label: 'නිමවූ', value: counts.completed, cls: 'stat-completed' },
               ].map(s => (
                 <div key={s.label} className={`hero-stat ${s.cls}`}>
@@ -157,7 +157,7 @@ export default function ProjectsPage() {
                 className={`ds-btn ${activeDs === '' ? 'ds-btn-active' : ''}`}
                 onClick={() => handleDsClick('')}
               >
-                සියල්ල
+                සමස්ථ
               </button>
               <button
                 className={`ds-btn ${activeDs === 'public' ? 'ds-btn-active' : ''}`}
@@ -186,7 +186,7 @@ export default function ProjectsPage() {
                   className={`gn-btn ${activeGn === '' ? 'gn-btn-active' : ''}`}
                   onClick={() => handleGnClick('')}
                 >
-                  සියල්ල
+                  සමස්ථ
                 </button>
                 {gnDivisions.map(gn => (
                   <button
@@ -253,7 +253,7 @@ export default function ProjectsPage() {
               <div className="summary-main">
                 <div className="summary-icon">💰</div>
                 <div>
-                  <div className="summary-label">PROJECT VALUE / ව්‍යාපෘති මුදල</div>
+                  <div className="summary-label">PROJECT VALUE / ප්රතිපාදන මුදල</div>
                   <div className="summary-value">
                     Rs. {totalMillion.toFixed(2)} <span className="summary-unit">Million</span>
                   </div>
@@ -271,7 +271,7 @@ export default function ProjectsPage() {
                 </div>
                 <div className="summary-stat ss-ongoing">
                   <span className="ss-num">{ongoing}</span>
-                  <span className="ss-lbl">සිදු වෙමින්</span>
+                  <span className="ss-lbl">ක්රියාත්මක වෙමින්</span>
                 </div>
                 <div className="summary-stat ss-completed">
                   <span className="ss-num">{completed}</span>

@@ -8,7 +8,7 @@ const STATUS_LABELS = {
 
 const STATUS_SI = {
   planned: 'සැලසුම් කළ',
-  ongoing: 'සිදු වෙමින්',
+  ongoing: 'ක්රියාත්මක වෙමින්',
   completed: 'සම්පූර්ණ',
 };
 
