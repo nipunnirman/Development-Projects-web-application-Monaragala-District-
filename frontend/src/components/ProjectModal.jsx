@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import './ProjectModal.css';
 
-const STATUS_LABELS = { planned: 'Planned / සැලසුම් කළ', ongoing: 'Ongoing / ක්රියාත්මක වෙමින්', completed: 'Completed / සම්පූර්ණ' };
+const STATUS_LABELS = { planned: 'Planned / සැලසුම් කළ', ongoing: 'Ongoing / ක්රියාත්මක වෙමින්', completed: 'Completed / නිමි' };
 
 export default function ProjectModal({ project, onClose }) {
   const ref = useRef();

@@ -47,7 +47,7 @@ const STATUS_OPTIONS = [
   { value: '', label: 'සමස්ථ' },
   { value: 'planned', label: 'සැලසුම් කළ' },
   { value: 'ongoing', label: 'ක්රියාත්මක වෙමින්' },
-  { value: 'completed', label: 'සම්පූර්ණ' },
+  { value: 'completed', label: 'නිමි' },
 ];
 
 export default function ProjectsPage() {
@@ -129,7 +129,7 @@ export default function ProjectsPage() {
             </div>
             <div className="hero-stats fade-up fade-up-1">
               {[
-                { label: 'සම්පූර්ණ', value: counts.all, cls: '' },
+                { label: 'නිමි', value: counts.all, cls: '' },
                 { label: 'සැලසුම් කළ', value: counts.planned, cls: 'stat-planned' },
                 { label: 'ක්රියාත්මක වෙමින්', value: counts.ongoing, cls: 'stat-ongoing' },
                 { label: 'නිමවූ', value: counts.completed, cls: 'stat-completed' },

@@ -9,7 +9,7 @@ const STATUS_LABELS = {
 const STATUS_SI = {
   planned: 'සැලසුම් කළ',
   ongoing: 'ක්රියාත්මක වෙමින්',
-  completed: 'සම්පූර්ණ',
+  completed: 'නිමි',
 };
 
 export default function ProjectCard({ project, onClick }) {
