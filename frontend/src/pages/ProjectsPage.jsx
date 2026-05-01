@@ -159,12 +159,6 @@ export default function ProjectsPage() {
               >
                 සමස්ථ
               </button>
-              <button
-                className={`ds-btn ${activeDs === 'public' ? 'ds-btn-active' : ''}`}
-                onClick={() => handleDsClick('public')}
-              >
-                පොදු ව්‍යාපෘති
-              </button>
               {dsDivisions.map(ds => (
                 <button
                   key={ds._id}
@@ -174,6 +168,12 @@ export default function ProjectsPage() {
                   {ds.nameSi || ds.name}
                 </button>
               ))}
+              <button
+                className={`ds-btn ${activeDs === 'public' ? 'ds-btn-active' : ''}`}
+                onClick={() => handleDsClick('public')}
+              >
+                පොදු ව්‍යාපෘති
+              </button>
             </div>
           </div>
 
