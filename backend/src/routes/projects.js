@@ -73,7 +73,10 @@ router.post('/', protect, async (req, res) => {
 
     const project = await Project.create({
       projectName, description,
+      scope: req.body.scope || 'specific',
       districtId, dsDivisionId, gnDivisionId,
+      affectedDsDivisions: req.body.affectedDsDivisions || [],
+      affectedGnDivisions: req.body.affectedGnDivisions || [],
       latitude: latitude || null,
       longitude: longitude || null,
       startDate, endDate, status,
@@ -107,7 +110,9 @@ router.put('/:id', protect, async (req, res) => {
     )
       .populate('districtId', 'name nameSi')
       .populate('dsDivisionId', 'name nameSi')
-      .populate('gnDivisionId', 'name nameSi');
+      .populate('gnDivisionId', 'name nameSi')
+      .populate('affectedDsDivisions', 'name nameSi')
+      .populate('affectedGnDivisions', 'name nameSi');
 
     if (!project) {
       return res.status(404).json({ success: false, message: 'Project not found' });
