@@ -81,8 +81,14 @@ export default function ProjectsPage() {
     setError('');
     try {
       const params = {};
-      if (gn) params.gn = gn;        // GN takes priority
-      else if (ds) params.ds = ds;   // else filter by DS
+      if (gn === 'public') {
+        params.scope = 'public';
+        if (ds) params.ds = ds;
+      } else if (gn) {
+        params.gn = gn;
+      } else if (ds) {
+        params.ds = ds;
+      }
       if (status) params.status = status;
       const { data } = await getProjects(params);
       setProjects(data.data);
@@ -187,6 +193,12 @@ export default function ProjectsPage() {
                   onClick={() => handleGnClick('')}
                 >
                   සමස්ථ
+                </button>
+                <button
+                  className={`gn-btn ${activeGn === 'public' ? 'gn-btn-active' : ''}`}
+                  onClick={() => handleGnClick('public')}
+                >
+                  පොදු ව්‍යාපෘති
                 </button>
                 {gnDivisions.map(gn => (
                   <button

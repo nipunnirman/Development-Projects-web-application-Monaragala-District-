@@ -8,20 +8,24 @@ const router = express.Router();
 // GET /api/projects  (public - with filters)
 router.get('/', async (req, res) => {
   try {
-    const { district, ds, gn, status } = req.query;
+    const { district, ds, gn, status, scope } = req.query;
     const filter = {};
 
     if (district) filter.districtId = district;
 
-    if (ds === 'public') {
+    if (scope === 'public') {
       filter.scope = 'public';
+      if (ds && ds !== 'public') {
+        filter.affectedDsDivisions = ds;
+      }
     } else if (gn) {
       filter.gnDivisionId = gn;
     } else if (ds) {
-      filter.dsDivisionId = ds;
-      // Do not force "specific" if we only want to match the division
-      // If we want to return BOTH 'specific' AND 'public' projects that affect this DS?
-      // Wait, if a project is public, it passes through multiple DS's via `affectedDsDivisions`.
+      if (ds === 'public') {
+        filter.scope = 'public';
+      } else {
+        filter.dsDivisionId = ds;
+      }
     }
 
     // No DS/GN filter → show ALL projects (specific + public)
