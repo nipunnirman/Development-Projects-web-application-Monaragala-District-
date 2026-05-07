@@ -1,9 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { getProjects, deleteProject } from '../api';
+import { getProjects, deleteProject, getDistricts, getDsDivisions, getGnDivisions } from '../api';
 import ProjectForm from '../components/ProjectForm';
 import './AdminPage.css';
+
+const STATUS_OPTIONS = [
+  { value: '', label: 'සමස්ථ' },
+  { value: 'planned', label: 'සැලසුම් කළ' },
+  { value: 'ongoing', label: 'ක්රියාත්මක වෙමින්' },
+  { value: 'completed', label: 'නිමි' },
+];
 
 const STATUS_LABELS = { planned: 'Planned', ongoing: 'Ongoing', completed: 'Completed' };
 
@@ -17,18 +24,72 @@ export default function AdminPage() {
   const [error, setError] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
+  // Filtering state
+  const [dsDivisions, setDsDivisions] = useState([]);
+  const [gnDivisions, setGnDivisions] = useState([]);
+  const [activeDs, setActiveDs] = useState('');
+  const [activeGn, setActiveGn] = useState('');
+  const [activeStatus, setActiveStatus] = useState('');
+
   useEffect(() => {
     if (!admin) { nav('/login'); return; }
+    
+    // Initial fetch
     fetchProjects();
+
+    // Load locations
+    getDistricts().then(r => {
+      const districts = r.data.data;
+      if (districts.length > 0) {
+        getDsDivisions(districts[0]._id).then(res => {
+          setDsDivisions(res.data.data);
+        });
+      }
+    });
   }, [admin]);
 
-  const fetchProjects = async () => {
+  const fetchProjects = async (ds = activeDs, gn = activeGn, status = activeStatus) => {
     setLoading(true);
+    setError('');
     try {
-      const { data } = await getProjects();
+      const params = {};
+      if (gn === 'public') {
+        params.scope = 'public';
+        if (ds) params.ds = ds;
+      } else if (gn) {
+        params.gn = gn;
+      } else if (ds) {
+        params.ds = ds;
+      }
+      if (status) params.status = status;
+
+      const { data } = await getProjects(params);
       setProjects(data.data);
-    } catch { setError('Failed to load projects.'); }
-    finally { setLoading(false); }
+    } catch { 
+      setError('Failed to load projects.'); 
+    } finally { 
+      setLoading(false); 
+    }
+  };
+
+  const handleDsClick = (dsId) => {
+    setActiveDs(dsId);
+    setActiveGn('');
+    setGnDivisions([]);
+    if (dsId && dsId !== 'public') {
+      getGnDivisions(dsId).then(r => setGnDivisions(r.data.data));
+    }
+    fetchProjects(dsId, '', activeStatus);
+  };
+
+  const handleGnClick = (gnId) => {
+    setActiveGn(gnId);
+    fetchProjects(activeDs, gnId, activeStatus);
+  };
+
+  const handleStatusClick = (status) => {
+    setActiveStatus(status);
+    fetchProjects(activeDs, activeGn, status);
   };
 
   const handleDelete = async (id) => {
@@ -92,6 +153,66 @@ export default function AdminPage() {
               <div className="asc-lbl">{s.label}</div>
             </div>
           ))}
+        </div>
+
+        {/* Filters */}
+        <div className="admin-filters-bar card fade-up">
+          <div className="ds-filter-inner">
+            <span className="ds-filter-label">ප්‍රාදේශීය ලේකම්</span>
+            <div className="ds-buttons">
+              <button
+                className={`ds-btn ${activeDs === '' ? 'ds-btn-active' : ''}`}
+                onClick={() => handleDsClick('')}
+              >සමස්ථ</button>
+              {dsDivisions.map(ds => (
+                <button
+                  key={ds._id}
+                  className={`ds-btn ${activeDs === ds._id ? 'ds-btn-active' : ''}`}
+                  onClick={() => handleDsClick(ds._id)}
+                >{ds.nameSi || ds.name}</button>
+              ))}
+              <button
+                className={`ds-btn ${activeDs === 'public' ? 'ds-btn-active' : ''}`}
+                onClick={() => handleDsClick('public')}
+              >පොදු ව්‍යාපෘති</button>
+            </div>
+          </div>
+
+          {activeDs && activeDs !== 'public' && gnDivisions.length > 0 && (
+            <div className="gn-filter-inner">
+              <span className="ds-filter-label">ග්‍රාම නිලධාරී</span>
+              <div className="gn-buttons">
+                <button
+                  className={`gn-btn ${activeGn === '' ? 'gn-btn-active' : ''}`}
+                  onClick={() => handleGnClick('')}
+                >සමස්ථ</button>
+                <button
+                  className={`gn-btn ${activeGn === 'public' ? 'gn-btn-active' : ''}`}
+                  onClick={() => handleGnClick('public')}
+                >පොදු ව්‍යාපෘති</button>
+                {gnDivisions.map(gn => (
+                  <button
+                    key={gn._id}
+                    className={`gn-btn ${activeGn === gn._id ? 'gn-btn-active' : ''}`}
+                    onClick={() => handleGnClick(gn._id)}
+                  >{gn.nameSi || gn.name}</button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="status-filter-inner">
+            <span className="ds-filter-label">තත්ත්වය</span>
+            <div className="status-pills">
+              {STATUS_OPTIONS.map(s => (
+                <button
+                  key={s.value}
+                  className={`status-pill status-pill-${s.value || 'all'} ${activeStatus === s.value ? 'status-pill-active' : ''}`}
+                  onClick={() => handleStatusClick(s.value)}
+                >{s.label}</button>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Project table */}
