@@ -238,6 +238,137 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
+/* GN Division Scrollable Button Group */
+.gn-division-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+.gn-scroll-container {
+  flex: 1;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold) transparent;
+  border: 1px solid var(--cream-dark);
+  border-radius: 6px;
+  background: var(--cream-light);
+}
+
+.gn-scroll-container::-webkit-scrollbar {
+  height: 4px;
+}
+
+.gn-scroll-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.gn-scroll-container::-webkit-scrollbar-thumb {
+  background: var(--gold);
+  border-radius: 2px;
+}
+
+.gn-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-dark);
+}
+
+.gn-button-group {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  width: fit-content;
+  min-width: 100%;
+}
+
+.gn-btn {
+  flex-shrink: 0;
+  padding: 8px 12px;
+  border: 2px solid var(--cream-dark);
+  background: var(--white);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-width: 90px;
+}
+
+.gn-btn-si {
+  font-weight: 600;
+  color: var(--navy);
+  font-size: 0.8rem;
+}
+
+.gn-btn-en {
+  font-size: 0.65rem;
+  color: var(--slate);
+  margin-top: 2px;
+}
+
+.gn-btn:hover {
+  border-color: var(--gold);
+  background: var(--cream-light);
+  transform: translateY(-2px);
+}
+
+.gn-btn-active {
+  border-color: var(--gold);
+  background: var(--gold);
+  color: var(--white);
+}
+
+.gn-btn-active .gn-btn-si,
+.gn-btn-active .gn-btn-en {
+  color: var(--white);
+}
+
+.gn-empty {
+  padding: 12px;
+  color: var(--slate-lt);
+  font-size: 0.85rem;
+  text-align: center;
+  width: 100%;
+}
+
+.gn-scroll-btn {
+  background: var(--gold);
+  color: var(--white);
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.gn-scroll-btn:hover {
+  background: var(--gold-dark);
+  transform: scale(1.05);
+}
+
+.gn-scroll-btn:active {
+  transform: scale(0.95);
+}
+
+/* Hide scroll buttons on mobile */
+@media (max-width: 768px) {
+  .gn-scroll-btn {
+    display: none;
+  }
+}
+
 .text-btn-xs:hover {
   background: var(--cream);
   color: var(--navy);

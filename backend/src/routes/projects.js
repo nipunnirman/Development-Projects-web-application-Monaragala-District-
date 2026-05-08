@@ -38,7 +38,8 @@ router.get('/', async (req, res) => {
       .populate('gnDivisionId', 'name nameSi')
       .populate('affectedDsDivisions', 'name nameSi')
       .populate('affectedGnDivisions', 'name nameSi')
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .lean();
 
     res.json({ success: true, count: projects.length, data: projects });
   } catch (error) {

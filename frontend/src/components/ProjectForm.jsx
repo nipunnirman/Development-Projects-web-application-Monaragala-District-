@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { createProject, updateProject, uploadProjectImage } from '../api';
 import { useLocations } from '../hooks/useLocations';
 import { parseDMS } from '../utils/coordinates';
@@ -25,6 +25,7 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError]     = useState('');
+  const gnScrollRef = useRef(null);
   const { districts, dsDivisions, gnDivisions, loadDs, loadGn } = useLocations();
 
   useEffect(() => {
@@ -65,6 +66,18 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
     const v = e.target.value;
     set('dsDivisionId', v); set('gnDivisionId', '');
     await loadGn(v);
+  };
+
+  const scrollGnLeft = () => {
+    if (gnScrollRef.current) {
+      gnScrollRef.current.scrollBy({ left: -120, behavior: 'smooth' });
+    }
+  };
+
+  const scrollGnRight = () => {
+    if (gnScrollRef.current) {
+      gnScrollRef.current.scrollBy({ left: 120, behavior: 'smooth' });
+    }
   };
 
   const handleDMSChange = e => {
@@ -272,12 +285,47 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
                 </div>
                 <div className="form-group">
                   <label className="form-label">GN Division *</label>
-                  <select className="form-select" value={form.gnDivisionId} onChange={e => set('gnDivisionId', e.target.value)} required={!isPublic} disabled={!form.dsDivisionId}>
-                    <option value="">Select GN Division</option>
-                    {gnDivisions.map(g => (
-                      <option key={g._id} value={g._id}>{g.nameSi} ({g.name})</option>
-                    ))}
-                  </select>
+                  <div className="gn-division-wrapper">
+                    <button
+                      type="button"
+                      className="gn-scroll-btn gn-scroll-left"
+                      onClick={scrollGnLeft}
+                      title="Scroll left"
+                    >
+                      ‹
+                    </button>
+                    <div className="gn-scroll-container" ref={gnScrollRef}>
+                      <div className="gn-button-group">
+                        {gnDivisions.length === 0 ? (
+                          <div className="gn-empty">Select DS Division first</div>
+                        ) : (
+                          gnDivisions.map(g => (
+                            <button
+                              key={g._id}
+                              type="button"
+                              className={`gn-btn ${form.gnDivisionId === g._id ? 'gn-btn-active' : ''}`}
+                              onClick={() => set('gnDivisionId', g._id)}
+                              title={`${g.nameSi} (${g.name})`}
+                            >
+                              <span className="gn-btn-si">{g.nameSi}</span>
+                              <span className="gn-btn-en">{g.name}</span>
+                            </button>
+                          ))
+                        )}
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      className="gn-scroll-btn gn-scroll-right"
+                      onClick={scrollGnRight}
+                      title="Scroll right"
+                    >
+                      ›
+                    </button>
+                  </div>
+                  {!form.gnDivisionId && form.dsDivisionId && (
+                    <span style={{ fontSize: '0.75rem', color: 'var(--error)' }}>Required</span>
+                  )}
                 </div>
               </div>
             )}
