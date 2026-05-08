@@ -50,7 +50,7 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (!admin) { nav('/login'); return; }
-    
+
     // Initial fetch
     fetchProjects();
 
@@ -83,10 +83,10 @@ export default function AdminPage() {
 
       const { data } = await getProjects(params);
       setProjects(data.data);
-    } catch { 
-      setError('Failed to load projects.'); 
-    } finally { 
-      setLoading(false); 
+    } catch {
+      setError('Failed to load projects.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -151,23 +151,23 @@ export default function AdminPage() {
             <p className="admin-sub">Welcome, <strong>{admin?.username}</strong> · Manage development projects</p>
           </div>
           <button className="btn btn-primary" onClick={() => { setEditProject(null); setShowForm(true); }}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
             New Project
           </button>
         </div>
       </div>
 
       <div className="container admin-body">
-        {error   && <div className="alert alert-error   fade-up">{error}</div>}
+        {error && <div className="alert alert-error   fade-up">{error}</div>}
         {successMsg && <div className="alert alert-success fade-up">{successMsg}</div>}
 
         {/* Summary stats */}
         <div className="admin-stats fade-up">
           {[
             { label: 'Total', v: projects.length, cls: '' },
-            { label: 'Planned',   v: projects.filter(p=>p.status==='planned').length,   cls:'s-p' },
-            { label: 'Ongoing',   v: projects.filter(p=>p.status==='ongoing').length,   cls:'s-o' },
-            { label: 'Completed', v: projects.filter(p=>p.status==='completed').length, cls:'s-c' },
+            { label: 'Planned', v: projects.filter(p => p.status === 'planned').length, cls: 's-p' },
+            { label: 'Ongoing', v: projects.filter(p => p.status === 'ongoing').length, cls: 's-o' },
+            { label: 'Completed', v: projects.filter(p => p.status === 'completed').length, cls: 's-c' },
           ].map(s => (
             <div key={s.label} className={`admin-stat-card card ${s.cls}`}>
               <div className="asc-num">{s.v}</div>
@@ -258,6 +258,7 @@ export default function AdminPage() {
                     <th>Project Name</th>
                     <th>District</th>
                     <th>Status</th>
+                    <th>Added By</th>
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Actions</th>
@@ -266,16 +267,27 @@ export default function AdminPage() {
                 <tbody>
                   {currentProjects.map(p => (
                     <tr key={p._id}>
-                      <td className="td-name sinhala">{p.projectName}</td>
-                      <td className="sinhala">{p.districtId?.nameSi || '—'}</td>
-                      <td><span className={`badge badge-${p.status}`}>{STATUS_LABELS[p.status]}</span></td>
-                      <td>{fmt(p.startDate)}</td>
-                      <td>{fmt(p.endDate)}</td>
-                      <td className="td-actions">
-                        <button className="btn btn-outline btn-sm" onClick={() => handleEdit(p)}>Edit</button>
-                        <button className="btn btn-danger btn-sm" onClick={() => handleDelete(p._id)}>Delete</button>
-                      </td>
-                    </tr>
+                        <td className="td-name sinhala">{p.projectName}</td>
+                        <td className="sinhala">{p.districtId?.nameSi || '—'}</td>
+                        <td><span className={`badge badge-${p.status}`}>{STATUS_LABELS[p.status]}</span></td>
+                        <td className="td-creator">
+                          <span
+                            className="creator-dot"
+                            style={{
+                              background: (p.createdBy || '').includes('padmalatha') ? '#22c55e' : '#3b82f6',
+                            }}
+                          />
+                          <span className="creator-name">
+                            {(p.createdBy || '').includes('padmalatha') ? 'Padmalatha' : 'Mahinda'}
+                          </span>
+                        </td>
+                        <td>{fmt(p.startDate)}</td>
+                        <td>{fmt(p.endDate)}</td>
+                        <td className="td-actions">
+                          <button className="btn btn-outline btn-sm" onClick={() => handleEdit(p)}>Edit</button>
+                          <button className="btn btn-danger btn-sm" onClick={() => handleDelete(p._id)}>Delete</button>
+                        </td>
+                      </tr>
                   ))}
                 </tbody>
               </table>
@@ -283,17 +295,17 @@ export default function AdminPage() {
           )}
           {projects.length > 0 && totalPages > 1 && !loading && (
             <div className="admin-pagination">
-              <button 
-                className="btn btn-outline btn-sm" 
-                disabled={currentPage === 1} 
+              <button
+                className="btn btn-outline btn-sm"
+                disabled={currentPage === 1}
                 onClick={() => setCurrentPage(prev => prev - 1)}
               >
                 Previous
               </button>
               <span className="pagination-info">Page {currentPage} of {totalPages}</span>
-              <button 
-                className="btn btn-outline btn-sm" 
-                disabled={currentPage === totalPages} 
+              <button
+                className="btn btn-outline btn-sm"
+                disabled={currentPage === totalPages}
                 onClick={() => setCurrentPage(prev => prev + 1)}
               >
                 Next

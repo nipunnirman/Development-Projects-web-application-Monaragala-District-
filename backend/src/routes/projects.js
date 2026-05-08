@@ -87,6 +87,7 @@ router.post('/', protect, async (req, res) => {
       startDate, endDate, status,
       estimatedAmount: estimatedAmount || 0,
       progress: progress || 0,
+      createdBy: req.admin?.username || 'mahinda',
     });
 
     const populated = await project.populate([

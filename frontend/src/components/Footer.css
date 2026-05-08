@@ -1,7 +1,7 @@
 .footer {
   background: var(--navy);
   border-top: 2px solid var(--gold-dim);
-  padding: 24px 0;
+  padding: 48px 0;
   margin-top: auto;
 }
 
@@ -16,23 +16,23 @@
 .footer-brand {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 1.4rem;
+  gap: 12px;
+  font-size: 2rem;
 }
 
 .footer-title {
-  font-size: .82rem;
-  font-weight: 600;
+  font-size: 1.1rem;
+  font-weight: 700;
   color: var(--gold-light);
 }
 
 .footer-sub {
-  font-size: .72rem;
-  color: rgba(255,255,255,.4);
-  margin-top: 2px;
+  font-size: .85rem;
+  color: rgba(255,255,255,.5);
+  margin-top: 4px;
 }
 
 .footer-note {
-  font-size: .76rem;
-  color: rgba(255,255,255,.35);
+  font-size: .9rem;
+  color: rgba(255,255,255,.45);
 }

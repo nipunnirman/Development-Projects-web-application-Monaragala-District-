@@ -77,6 +77,10 @@ const projectSchema = new mongoose.Schema({
     min: 0,
     max: 100,
   },
+  createdBy: {
+    type: String,
+    default: 'mahinda',
+  },
 }, { timestamps: true });
 
 const Project = mongoose.model('Project', projectSchema);

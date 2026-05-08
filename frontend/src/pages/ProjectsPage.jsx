@@ -324,9 +324,9 @@ export default function ProjectsPage() {
             </div>
             {projects.length > 0 && totalPages > 1 && view === 'grid' && (
               <div className="admin-pagination">
-                <button 
-                  className="btn btn-outline btn-sm" 
-                  disabled={currentPage === 1} 
+                <button
+                  className="btn btn-outline btn-sm"
+                  disabled={currentPage === 1}
                   onClick={() => {
                     setCurrentPage(prev => prev - 1);
                     window.scrollTo({ top: 500, behavior: 'smooth' });
@@ -335,9 +335,9 @@ export default function ProjectsPage() {
                   Previous
                 </button>
                 <span className="pagination-info">Page {currentPage} of {totalPages}</span>
-                <button 
-                  className="btn btn-outline btn-sm" 
-                  disabled={currentPage === totalPages} 
+                <button
+                  className="btn btn-outline btn-sm"
+                  disabled={currentPage === totalPages}
                   onClick={() => {
                     setCurrentPage(prev => prev + 1);
                     window.scrollTo({ top: 500, behavior: 'smooth' });

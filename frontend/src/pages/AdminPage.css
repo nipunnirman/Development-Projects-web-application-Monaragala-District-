@@ -258,6 +258,29 @@
   box-shadow: 0 2px 8px rgba(67, 56, 202, 0.25);
 }
 
+/* Creator dot */
+.td-creator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.creator-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.08);
+}
+
+.creator-name {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--slate);
+}
+
 /* Responsive */
 @media (max-width: 860px) {
   .ds-filter-inner,
