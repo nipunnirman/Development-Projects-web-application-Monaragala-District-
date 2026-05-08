@@ -56,6 +56,7 @@ export default function ProjectsPage() {
   const [error, setError] = useState('');
   const [selected, setSelected] = useState(null);
   const [view, setView] = useState('grid');
+  const [visibleCount, setVisibleCount] = useState(15);
 
   // DS / GN Division filter state
   const [dsDivisions, setDsDivisions] = useState([]);
@@ -79,6 +80,7 @@ export default function ProjectsPage() {
   const loadProjects = async (ds = activeDs, gn = activeGn, status = activeStatus) => {
     setLoading(true);
     setError('');
+    setVisibleCount(15); // Reset visible count on new search
     try {
       const params = {};
       if (gn === 'public') {
@@ -100,6 +102,23 @@ export default function ProjectsPage() {
   };
 
   useEffect(() => { loadProjects(); }, []);
+
+  useEffect(() => {
+    if (view !== 'grid' || visibleCount >= projects.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        setVisibleCount((prev) => Math.min(prev + 15, projects.length));
+      }
+    }, { rootMargin: '200px' });
+
+    const target = document.getElementById('load-more-trigger');
+    if (target) observer.observe(target);
+
+    return () => {
+      if (target) observer.unobserve(target);
+    };
+  }, [view, projects.length, visibleCount]);
 
   const handleDsClick = (dsId) => {
     setActiveDs(dsId);
@@ -312,13 +331,18 @@ export default function ProjectsPage() {
             <p>වෙනත් ප්‍රාදේශීය ලේකම් කොට්ඨාශයක් හෝ තත්ත්වයක් තෝරන්න.</p>
           </div>
         ) : (
-          <div className="projects-grid">
-            {projects.map((p, i) => (
-              <div key={p._id} style={{ animationDelay: `${i * 0.04}s` }}>
-                <ProjectCard project={p} onClick={setSelected} />
-              </div>
-            ))}
-          </div>
+          <>
+            <div className="projects-grid">
+              {projects.slice(0, visibleCount).map((p, i) => (
+                <div key={p._id} style={{ animationDelay: `${(i % 15) * 0.04}s` }}>
+                  <ProjectCard project={p} onClick={setSelected} />
+                </div>
+              ))}
+            </div>
+            {visibleCount < projects.length && view === 'grid' && (
+              <div id="load-more-trigger" style={{ height: '20px', width: '100%' }}></div>
+            )}
+          </>
         )}
       </div>
 

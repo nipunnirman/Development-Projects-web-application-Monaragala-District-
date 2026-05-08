@@ -24,6 +24,10 @@ export default function AdminPage() {
   const [error, setError] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 50;
+
   // Filtering state
   const [dsDivisions, setDsDivisions] = useState([]);
   const [gnDivisions, setGnDivisions] = useState([]);
@@ -51,6 +55,7 @@ export default function AdminPage() {
   const fetchProjects = async (ds = activeDs, gn = activeGn, status = activeStatus) => {
     setLoading(true);
     setError('');
+    setCurrentPage(1); // Reset to page 1 on new fetch
     try {
       const params = {};
       if (gn === 'public') {
@@ -120,6 +125,9 @@ export default function AdminPage() {
   const handleEdit = p => { setEditProject(p); setShowForm(true); };
 
   const fmt = d => d ? new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '—';
+
+  const totalPages = Math.ceil(projects.length / itemsPerPage);
+  const currentProjects = projects.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
     <div className="admin-page">
@@ -241,7 +249,7 @@ export default function AdminPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {projects.map(p => (
+                  {currentProjects.map(p => (
                     <tr key={p._id}>
                       <td className="td-name sinhala">{p.projectName}</td>
                       <td className="sinhala">{p.districtId?.nameSi || '—'}</td>
@@ -256,6 +264,25 @@ export default function AdminPage() {
                   ))}
                 </tbody>
               </table>
+            </div>
+          )}
+          {projects.length > 0 && totalPages > 1 && !loading && (
+            <div className="admin-pagination">
+              <button 
+                className="btn btn-outline btn-sm" 
+                disabled={currentPage === 1} 
+                onClick={() => setCurrentPage(prev => prev - 1)}
+              >
+                Previous
+              </button>
+              <span className="pagination-info">Page {currentPage} of {totalPages}</span>
+              <button 
+                className="btn btn-outline btn-sm" 
+                disabled={currentPage === totalPages} 
+                onClick={() => setCurrentPage(prev => prev + 1)}
+              >
+                Next
+              </button>
             </div>
           )}
         </div>
