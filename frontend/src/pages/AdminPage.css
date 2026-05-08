@@ -260,10 +260,41 @@
 
 /* Responsive */
 @media (max-width: 860px) {
-  .ds-buttons, .status-pills {
+  .ds-filter-inner,
+  .status-filter-inner,
+  .gn-filter-inner {
+    gap: 6px;
+    margin-top: 2px;
+  }
+
+  .ds-filter-label {
+    font-size: 0.55rem;
+    width: 70px;
+    min-width: 70px;
+    flex-shrink: 0;
+    color: var(--navy);
+    opacity: 0.8;
+    white-space: normal;
+    line-height: 1.1;
+  }
+
+  .ds-buttons, .status-pills, .gn-buttons {
     flex-wrap: nowrap;
     overflow-x: auto;
-    padding-bottom: 4px;
+    padding-bottom: 2px;
+    gap: 4px;
+    scrollbar-width: none;
+  }
+
+  .ds-buttons::-webkit-scrollbar, 
+  .status-pills::-webkit-scrollbar, 
+  .gn-buttons::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ds-btn, .status-pill, .gn-btn {
+    padding: 3px 8px;
+    font-size: 0.6rem;
   }
 }
 

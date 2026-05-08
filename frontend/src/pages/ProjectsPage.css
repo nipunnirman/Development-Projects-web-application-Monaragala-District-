@@ -526,10 +526,14 @@
   }
 
   .ds-filter-label {
-    font-size: 0.6rem;
-    min-width: 55px;
+    font-size: 0.55rem;
+    width: 70px;
+    min-width: 70px;
+    flex-shrink: 0;
     color: var(--navy);
     opacity: 0.8;
+    white-space: normal;
+    line-height: 1.1;
   }
 
   .status-pills {
@@ -548,9 +552,9 @@
     display: none;
   }
 
-  .ds-btn, .status-pill {
+  .ds-btn, .status-pill, .gn-btn {
     padding: 3px 8px;
-    font-size: 0.65rem;
+    font-size: 0.6rem;
   }
 
   .projects-hero {
