@@ -56,7 +56,14 @@ export default function ProjectsPage() {
   const [error, setError] = useState('');
   const [selected, setSelected] = useState(null);
   const [view, setView] = useState('grid');
-  const [visibleCount, setVisibleCount] = useState(15);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(window.innerWidth <= 768 ? 30 : 50);
+
+  useEffect(() => {
+    const handleResize = () => setItemsPerPage(window.innerWidth <= 768 ? 30 : 50);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // DS / GN Division filter state
   const [dsDivisions, setDsDivisions] = useState([]);
@@ -80,7 +87,7 @@ export default function ProjectsPage() {
   const loadProjects = async (ds = activeDs, gn = activeGn, status = activeStatus) => {
     setLoading(true);
     setError('');
-    setVisibleCount(15); // Reset visible count on new search
+    setCurrentPage(1); // Reset page on new search
     try {
       const params = {};
       if (gn === 'public') {
@@ -103,23 +110,6 @@ export default function ProjectsPage() {
 
   useEffect(() => { loadProjects(); }, []);
 
-  useEffect(() => {
-    if (view !== 'grid' || visibleCount >= projects.length) return;
-
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        setVisibleCount((prev) => Math.min(prev + 15, projects.length));
-      }
-    }, { rootMargin: '200px' });
-
-    const target = document.getElementById('load-more-trigger');
-    if (target) observer.observe(target);
-
-    return () => {
-      if (target) observer.unobserve(target);
-    };
-  }, [view, projects.length, visibleCount]);
-
   const handleDsClick = (dsId) => {
     setActiveDs(dsId);
     setActiveGn('');           // clear GN when DS changes
@@ -141,6 +131,9 @@ export default function ProjectsPage() {
   };
 
   const counts = STATUS_COUNTS(projects);
+
+  const totalPages = Math.ceil(projects.length / itemsPerPage);
+  const currentProjects = projects.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
     <div className="projects-page">
@@ -333,14 +326,36 @@ export default function ProjectsPage() {
         ) : (
           <>
             <div className="projects-grid">
-              {projects.slice(0, visibleCount).map((p, i) => (
-                <div key={p._id} style={{ animationDelay: `${(i % 15) * 0.04}s` }}>
+              {currentProjects.map((p, i) => (
+                <div key={p._id} style={{ animationDelay: `${(i % itemsPerPage) * 0.04}s` }}>
                   <ProjectCard project={p} onClick={setSelected} />
                 </div>
               ))}
             </div>
-            {visibleCount < projects.length && view === 'grid' && (
-              <div id="load-more-trigger" style={{ height: '20px', width: '100%' }}></div>
+            {projects.length > 0 && totalPages > 1 && view === 'grid' && (
+              <div className="admin-pagination">
+                <button 
+                  className="btn btn-outline btn-sm" 
+                  disabled={currentPage === 1} 
+                  onClick={() => {
+                    setCurrentPage(prev => prev - 1);
+                    window.scrollTo({ top: 500, behavior: 'smooth' });
+                  }}
+                >
+                  Previous
+                </button>
+                <span className="pagination-info">Page {currentPage} of {totalPages}</span>
+                <button 
+                  className="btn btn-outline btn-sm" 
+                  disabled={currentPage === totalPages} 
+                  onClick={() => {
+                    setCurrentPage(prev => prev + 1);
+                    window.scrollTo({ top: 500, behavior: 'smooth' });
+                  }}
+                >
+                  Next
+                </button>
+              </div>
             )}
           </>
         )}

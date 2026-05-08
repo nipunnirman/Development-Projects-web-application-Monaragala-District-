@@ -26,7 +26,13 @@ export default function AdminPage() {
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 50;
+  const [itemsPerPage, setItemsPerPage] = useState(window.innerWidth <= 768 ? 30 : 50);
+
+  useEffect(() => {
+    const handleResize = () => setItemsPerPage(window.innerWidth <= 768 ? 30 : 50);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Filtering state
   const [dsDivisions, setDsDivisions] = useState([]);
