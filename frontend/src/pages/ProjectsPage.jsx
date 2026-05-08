@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { getProjects, getDistricts, getDsDivisions, getGnDivisions } from '../api';
 import ProjectCard from '../components/ProjectCard';
 import ProjectModal from '../components/ProjectModal';
@@ -58,6 +58,13 @@ export default function ProjectsPage() {
   const [view, setView] = useState('grid');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(window.innerWidth <= 768 ? 30 : 50);
+  const gnScrollRef = useRef(null);
+
+  const scrollGn = (direction) => {
+    if (gnScrollRef.current) {
+      gnScrollRef.current.scrollBy({ left: direction === 'left' ? -200 : 200, behavior: 'smooth' });
+    }
+  };
 
   useEffect(() => {
     const handleResize = () => setItemsPerPage(window.innerWidth <= 768 ? 30 : 50);
@@ -199,7 +206,8 @@ export default function ProjectsPage() {
           {activeDs && activeDs !== 'public' && gnDivisions.length > 0 && (
             <div className="gn-filter-inner">
               <span className="ds-filter-label">ග්‍රාම නිලධාරී</span>
-              <div className="gn-buttons">
+              <button className="scroll-arrow-desktop" onClick={() => scrollGn('left')}>&#8249;</button>
+              <div className="gn-buttons" ref={gnScrollRef}>
                 <button
                   className={`gn-btn ${activeGn === '' ? 'gn-btn-active' : ''}`}
                   onClick={() => handleGnClick('')}
@@ -222,6 +230,7 @@ export default function ProjectsPage() {
                   </button>
                 ))}
               </div>
+              <button className="scroll-arrow-desktop" onClick={() => scrollGn('right')}>&#8250;</button>
             </div>
           )}
 
