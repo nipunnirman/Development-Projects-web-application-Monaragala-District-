@@ -135,7 +135,7 @@ export default function ProjectsPage() {
             </div>
             <div className="hero-stats fade-up fade-up-1">
               {[
-                { label: 'නිමි', value: counts.all, cls: '' },
+                { label: 'Totale Projects', value: counts.all, cls: '' },
                 { label: 'සැලසුම් කළ', value: counts.planned, cls: 'stat-planned' },
                 { label: 'ක්රියාත්මක වෙමින්', value: counts.ongoing, cls: 'stat-ongoing' },
                 { label: 'නිමවූ', value: counts.completed, cls: 'stat-completed' },
