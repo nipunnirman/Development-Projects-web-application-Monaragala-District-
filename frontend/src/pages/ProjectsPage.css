@@ -511,14 +511,14 @@
 
   .ds-filter-bar {
     top: auto;
-    padding: 10px 0;
+    padding: 6px 0;
   }
 
   .ds-filter-inner,
   .status-filter-inner,
   .gn-filter-inner {
     gap: 6px;
-    margin-top: 4px;
+    margin-top: 2px;
   }
 
   .gn-filter-inner {
@@ -535,13 +535,22 @@
   .status-pills {
     flex-wrap: nowrap;
     overflow-x: auto;
-    padding-bottom: 4px;
-    gap: 6px;
+    padding-bottom: 2px;
+    gap: 4px;
+    scrollbar-width: none;
+  }
+
+  .status-pills::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .ds-buttons::-webkit-scrollbar, .gn-buttons::-webkit-scrollbar {
+    display: none;
   }
 
   .ds-btn, .status-pill {
-    padding: 4px 10px;
-    font-size: 0.72rem;
+    padding: 3px 8px;
+    font-size: 0.65rem;
   }
 
   .projects-hero {
