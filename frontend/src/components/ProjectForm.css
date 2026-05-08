@@ -336,6 +336,78 @@ input[type="number"] {
   width: 100%;
 }
 
+.gn-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: var(--cream);
+  border: 1.5px dashed var(--cream-dark);
+  border-radius: var(--radius);
+  color: var(--slate-lt);
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+/* Selected GN badge */
+.gn-selected-badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 14px;
+  background: #F0FDF4;
+  border: 2px solid #22c55e;
+  border-radius: var(--radius);
+}
+
+.gn-selected-name {
+  font-family: 'Noto Sans Sinhala', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #15803d;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.gn-selected-en {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.72rem;
+  color: #4ade80;
+  font-weight: 400;
+}
+
+.gn-change-btn {
+  background: none;
+  border: 1.5px solid #22c55e;
+  color: #15803d;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.gn-change-btn:hover {
+  background: #22c55e;
+  color: white;
+}
+
+.form-select[size] {
+  border-radius: var(--radius);
+  border: 1.5px solid var(--cream-dark);
+  padding: 4px 0;
+  transition: border-color var(--transition);
+}
+.form-select[size]:focus {
+  border-color: var(--gold);
+  box-shadow: var(--shadow-gold);
+}
+
 .gn-scroll-btn {
   background: var(--gold);
   color: var(--white);

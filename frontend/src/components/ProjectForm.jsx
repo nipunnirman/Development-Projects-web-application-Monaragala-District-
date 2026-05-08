@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { createProject, updateProject, uploadProjectImage } from '../api';
 import { useLocations } from '../hooks/useLocations';
 import { parseDMS } from '../utils/coordinates';
@@ -25,7 +25,7 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError]     = useState('');
-  const gnScrollRef = useRef(null);
+  const [gnSearch, setGnSearch] = useState('');
   const { districts, dsDivisions, gnDivisions, loadDs, loadGn } = useLocations();
 
   useEffect(() => {
@@ -68,17 +68,6 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
     await loadGn(v);
   };
 
-  const scrollGnLeft = () => {
-    if (gnScrollRef.current) {
-      gnScrollRef.current.scrollBy({ left: -120, behavior: 'smooth' });
-    }
-  };
-
-  const scrollGnRight = () => {
-    if (gnScrollRef.current) {
-      gnScrollRef.current.scrollBy({ left: 120, behavior: 'smooth' });
-    }
-  };
 
   const handleDMSChange = e => {
     const val = e.target.value;
@@ -273,58 +262,68 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
               </div>
             ) : (
               /* Specific scope — single DS + GN select */
-              <div className="form-grid">
+              <div className="form-grid-2">
                 <div className="form-group">
                   <label className="form-label">DS Division *</label>
                   <select className="form-select" value={form.dsDivisionId} onChange={handleDs} required={!isPublic} disabled={!form.districtId}>
-                    <option value="">Select DS Division</option>
+                    <option value="">-- ප්‍රාදේශීය ලේකම් කොට්ඨාශය තෝරන්න --</option>
                     {dsDivisions.map(d => (
-                      <option key={d._id} value={d._id}>{d.nameSi} ({d.name})</option>
+                      <option key={d._id} value={d._id}>{d.nameSi} — {d.name}</option>
                     ))}
                   </select>
                 </div>
                 <div className="form-group">
                   <label className="form-label">GN Division *</label>
-                  <div className="gn-division-wrapper">
-                    <button
-                      type="button"
-                      className="gn-scroll-btn gn-scroll-left"
-                      onClick={scrollGnLeft}
-                      title="Scroll left"
-                    >
-                      ‹
-                    </button>
-                    <div className="gn-scroll-container" ref={gnScrollRef}>
-                      <div className="gn-button-group">
-                        {gnDivisions.length === 0 ? (
-                          <div className="gn-empty">Select DS Division first</div>
-                        ) : (
-                          gnDivisions.map(g => (
-                            <button
-                              key={g._id}
-                              type="button"
-                              className={`gn-btn ${form.gnDivisionId === g._id ? 'gn-btn-active' : ''}`}
-                              onClick={() => set('gnDivisionId', g._id)}
-                              title={`${g.nameSi} (${g.name})`}
-                            >
-                              <span className="gn-btn-si">{g.nameSi}</span>
-                              <span className="gn-btn-en">{g.name}</span>
-                            </button>
-                          ))
-                        )}
-                      </div>
+                  {!form.dsDivisionId ? (
+                    <div className="gn-placeholder">
+                      <span>⬅ DS Division first select කරන්න</span>
                     </div>
-                    <button
-                      type="button"
-                      className="gn-scroll-btn gn-scroll-right"
-                      onClick={scrollGnRight}
-                      title="Scroll right"
-                    >
-                      ›
-                    </button>
-                  </div>
-                  {!form.gnDivisionId && form.dsDivisionId && (
-                    <span style={{ fontSize: '0.75rem', color: 'var(--error)' }}>Required</span>
+                  ) : form.gnDivisionId ? (
+                    /* GN already selected — show badge + change button */
+                    <div className="gn-selected-badge">
+                      <span className="gn-selected-name">
+                        ✅ {gnDivisions.find(g => g._id === form.gnDivisionId)?.nameSi || '—'}
+                        <span className="gn-selected-en">
+                          {gnDivisions.find(g => g._id === form.gnDivisionId)?.name}
+                        </span>
+                      </span>
+                      <button
+                        type="button"
+                        className="gn-change-btn"
+                        onClick={() => { set('gnDivisionId', ''); setGnSearch(''); }}
+                      >
+                        ✎ වෙනස් කරන්න
+                      </button>
+                    </div>
+                  ) : (
+                    /* GN not selected — show search + list */
+                    <>
+                      <input
+                        className="form-input"
+                        placeholder="🔍 GN Division සොයන්න..."
+                        value={gnSearch}
+                        onChange={e => setGnSearch(e.target.value)}
+                        style={{ marginBottom: 6 }}
+                        autoFocus
+                      />
+                      <select
+                        className="form-select"
+                        value={form.gnDivisionId}
+                        onChange={e => { set('gnDivisionId', e.target.value); setGnSearch(''); }}
+                        required={!isPublic}
+                        size={Math.min(7, gnDivisions.filter(g =>
+                          !gnSearch || g.nameSi.includes(gnSearch) || g.name.toLowerCase().includes(gnSearch.toLowerCase())
+                        ).length + 1)}
+                        style={{ height: 'auto' }}
+                      >
+                        <option value="">-- GN Division තෝරන්න --</option>
+                        {gnDivisions
+                          .filter(g => !gnSearch || g.nameSi.includes(gnSearch) || g.name.toLowerCase().includes(gnSearch.toLowerCase()))
+                          .map(g => (
+                            <option key={g._id} value={g._id}>{g.nameSi} — {g.name}</option>
+                          ))}
+                      </select>
+                    </>
                   )}
                 </div>
               </div>
