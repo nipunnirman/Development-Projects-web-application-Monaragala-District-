@@ -227,6 +227,17 @@
   transition: all 0.2s;
 }
 
+/* Hide number input spinner controls */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 .text-btn-xs:hover {
   background: var(--cream);
   color: var(--navy);
