@@ -292,25 +292,6 @@ export default function ProjectsPage() {
                   </div>
                 </div>
               </div>
-              <div className="summary-divider" />
-              <div className="summary-stats">
-                <div className="summary-stat">
-                  <span className="ss-num">{projects.length}</span>
-                  <span className="ss-lbl">ව්‍යාපෘති</span>
-                </div>
-                <div className="summary-stat ss-planned">
-                  <span className="ss-num">{planned}</span>
-                  <span className="ss-lbl">සැලසුම් කළ</span>
-                </div>
-                <div className="summary-stat ss-ongoing">
-                  <span className="ss-num">{ongoing}</span>
-                  <span className="ss-lbl">ක්රියාත්මක වෙමින්</span>
-                </div>
-                <div className="summary-stat ss-completed">
-                  <span className="ss-num">{completed}</span>
-                  <span className="ss-lbl">නිමවූ</span>
-                </div>
-              </div>
             </div>
           );
         })()}
