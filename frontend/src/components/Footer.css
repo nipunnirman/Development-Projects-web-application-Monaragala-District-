@@ -1,5 +1,9 @@
 .footer {
-  background: var(--navy);
+  background-color: var(--navy);
+  background-image: url('/pngwing.com-2.png');
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: soft-light;
   border-top: 2px solid var(--gold-dim);
   padding: 48px 0;
   margin-top: auto;

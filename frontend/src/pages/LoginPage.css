@@ -3,7 +3,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+  background-color: var(--navy);
+  background-image: url('/pngwing.com-2.png');
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: soft-light;
   padding: 24px;
 }
 

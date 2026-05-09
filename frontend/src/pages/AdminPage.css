@@ -1,7 +1,11 @@
 .admin-page { padding-bottom: 60px; }
 
 .admin-header {
-  background: var(--navy);
+  background-color: var(--navy);
+  background-image: url('/pngwing.com-2.png');
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: soft-light;
   border-bottom: 3px solid var(--gold);
   padding: 28px 0;
 }
