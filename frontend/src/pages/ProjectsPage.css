@@ -565,10 +565,7 @@
     font-size: 0.6rem;
   }
 
-  .projects-hero {
-    padding: 16px 0 !important;
-    background: var(--navy);
-  }
+    background-color: var(--navy);
 
   .projects-hero-inner {
     flex-direction: column !important;
