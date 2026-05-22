@@ -195,7 +195,7 @@ export default function AdminPage() {
               <button
                 className={`ds-btn ${activeDs === 'public' ? 'ds-btn-active' : ''}`}
                 onClick={() => handleDsClick('public')}
-              >පොදු ව්‍යාපෘති</button>
+              >දිස්ත්‍රික්කයේ පොදු</button>
             </div>
           </div>
 
@@ -211,7 +211,7 @@ export default function AdminPage() {
                 <button
                   className={`gn-btn ${activeGn === 'public' ? 'gn-btn-active' : ''}`}
                   onClick={() => handleGnClick('public')}
-                >පොදු ව්‍යාපෘති</button>
+                >පොදු</button>
                 {gnDivisions.map(gn => (
                   <button
                     key={gn._id}

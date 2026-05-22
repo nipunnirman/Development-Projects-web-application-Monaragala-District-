@@ -197,7 +197,7 @@ export default function ProjectsPage() {
                 className={`ds-btn ${activeDs === 'public' ? 'ds-btn-active' : ''}`}
                 onClick={() => handleDsClick('public')}
               >
-                පොදු ව්‍යාපෘති
+                දිස්ත්‍රික්කයේ පොදු
               </button>
             </div>
           </div>
@@ -218,7 +218,7 @@ export default function ProjectsPage() {
                   className={`gn-btn ${activeGn === 'public' ? 'gn-btn-active' : ''}`}
                   onClick={() => handleGnClick('public')}
                 >
-                  පොදු ව්‍යාපෘති
+                  පොදු
                 </button>
                 {gnDivisions.map(gn => (
                   <button

@@ -7,6 +7,8 @@
     "start": "node src/server.js",
     "dev": "nodemon --watch src src/server.js",
     "seed": "node src/seeders/seed.js",
+    "clear-projects": "node clear-projects.js",
+    "import-projects": "node src/seeders/import-projects.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -22,7 +24,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.14.3",
     "multer": "^2.1.1",
-    "multer-storage-cloudinary": "^4.0.0"
+    "multer-storage-cloudinary": "^4.0.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"

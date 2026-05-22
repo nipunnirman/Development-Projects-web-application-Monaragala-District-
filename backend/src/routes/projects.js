@@ -2,18 +2,27 @@ import express from 'express';
 import Project from '../models/Project.js';
 import protect from '../middleware/auth.js';
 import upload from '../middleware/upload.js';
+import dbCache from '../utils/cache.js';
 
 const router = express.Router();
 
 // GET /api/projects  (public - with filters)
 router.get('/', async (req, res) => {
   try {
+    const cacheKey = `projects-${JSON.stringify(req.query)}`;
+    const cached = dbCache.get(cacheKey);
+    if (cached) {
+      return res.json(cached);
+    }
+
     const { district, ds, gn, status, scope } = req.query;
     const filter = {};
 
     if (district) filter.districtId = district;
 
     if (scope === 'public') {
+      // GN-level "පොදු" button inside a specific DS: show DS-specific public projects only
+      // (projects that belong to this DS but have no specific GN division)
       filter.scope = 'public';
       if (ds && ds !== 'public') {
         filter.affectedDsDivisions = ds;
@@ -22,7 +31,9 @@ router.get('/', async (req, res) => {
       filter.gnDivisionId = gn;
     } else if (ds) {
       if (ds === 'public') {
+        // DS-level "දිස්ත්‍රික්කයේ පොදු" button: show ONLY district-wide projects
         filter.scope = 'public';
+        filter.dsDivisionId = null;
       } else {
         filter.dsDivisionId = ds;
       }
@@ -41,7 +52,10 @@ router.get('/', async (req, res) => {
       .sort({ createdAt: -1 })
       .lean();
 
-    res.json({ success: true, count: projects.length, data: projects });
+    const responseData = { success: true, count: projects.length, data: projects };
+    dbCache.set(cacheKey, responseData, 300000); // 5 minutes TTL
+
+    res.json(responseData);
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
@@ -96,6 +110,7 @@ router.post('/', protect, async (req, res) => {
       { path: 'gnDivisionId', select: 'name nameSi' },
     ]);
 
+    dbCache.clear();
     res.status(201).json({ success: true, data: populated });
   } catch (error) {
     if (error.name === 'ValidationError') {
@@ -124,6 +139,7 @@ router.put('/:id', protect, async (req, res) => {
       return res.status(404).json({ success: false, message: 'Project not found' });
     }
 
+    dbCache.clear();
     res.json({ success: true, data: project });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -137,6 +153,7 @@ router.delete('/:id', protect, async (req, res) => {
     if (!project) {
       return res.status(404).json({ success: false, message: 'Project not found' });
     }
+    dbCache.clear();
     res.json({ success: true, message: 'Project deleted successfully' });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -158,6 +175,7 @@ router.post('/:id/upload', protect, upload.single('image'), async (req, res) => 
     project.images.push(req.file.path);
     await project.save();
 
+    dbCache.clear();
     res.json({ success: true, data: project });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
