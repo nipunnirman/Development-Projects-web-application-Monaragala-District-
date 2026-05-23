@@ -5,6 +5,7 @@ import 'dotenv/config';
 import authRoutes from './routes/auth.js';
 import locationRoutes from './routes/locations.js';
 import projectRoutes from './routes/projects.js';
+import suggestionRoutes from './routes/suggestions.js';
 
 const app = express();
 
@@ -41,6 +42,7 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api', locationRoutes);
 app.use('/api/projects', projectRoutes);
+app.use('/api/suggestions', suggestionRoutes);
 
 // 404
 app.use((req, res) => {

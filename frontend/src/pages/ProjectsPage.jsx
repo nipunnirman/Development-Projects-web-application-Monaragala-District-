@@ -5,6 +5,7 @@ import ProjectModal from '../components/ProjectModal';
 import ProjectMap from '../components/ProjectMap';
 import ProjectDashboard from '../components/ProjectDashboard';
 import InfoPopup from '../components/InfoPopup';
+import SuggestionsForm from '../components/SuggestionsForm';
 import './ProjectsPage.css';
 
 const STATUS_COUNTS = (projects) => ({
@@ -354,6 +355,10 @@ export default function ProjectsPage() {
             )}
           </>
         )}
+      </div>
+
+      <div className="container">
+        <SuggestionsForm />
       </div>
 
       {selected && <ProjectModal project={selected} onClose={() => setSelected(null)} />}

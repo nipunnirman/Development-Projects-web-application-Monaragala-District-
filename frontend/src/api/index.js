@@ -134,6 +134,11 @@ export const uploadProjectImage = async (id, file) => {
   });
 };
 
+// ── Suggestion endpoints ─────────────────────────────────────
+export const submitSuggestion = async (data) => {
+  return api.post('/suggestions', data);
+};
+
 // ── Auth endpoints ──────────────────────────────────────────
 export const login = credentials => api.post('/auth/login', credentials);
 
