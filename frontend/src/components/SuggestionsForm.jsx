@@ -117,11 +117,11 @@ export default function SuggestionsForm() {
             />
           </div>
 
-          <div className="form-submit-row">
-            <p className="submit-hint sinhala">
-              📬 යොමු කිරීමෙන් පසු ඔබේ විද්‍යුත් තැපෑල යෙදුම විවෘත වේ. "Send" ක්ලික් කරන්න.
-              <span className="en-label"> Your email app will open pre-filled — just click Send.</span>
-            </p>
+          <p className="submit-hint sinhala">
+            📬 යොමු කිරීමෙන් පසු ඔබේ විද්‍යුත් තැපෑල යෙදුම විවෘත වේ. "Send" ක්ලික් කරන්න.
+            <span className="en-label"> Your email app will open pre-filled — just click Send.</span>
+          </p>
+          <div className="submit-btn-wrapper">
             <button type="submit" className="btn btn-primary suggestions-submit-btn">
               <span>📨</span>
               <span className="sinhala">යෝජනාව යොමු කරන්න / Submit Suggestion</span>
