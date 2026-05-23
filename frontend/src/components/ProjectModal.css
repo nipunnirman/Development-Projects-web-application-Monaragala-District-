@@ -1,7 +1,7 @@
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(13,27,42,.65);
+  background: rgba(13, 27, 42, .65);
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
@@ -21,9 +21,21 @@
 .modal-stripe {
   height: 6px;
 }
-.status-planned   .modal-stripe, .modal-stripe.status-planned   { background: var(--status-planned); }
-.status-ongoing   .modal-stripe, .modal-stripe.status-ongoing   { background: var(--status-ongoing); }
-.status-completed .modal-stripe, .modal-stripe.status-completed { background: var(--status-completed); }
+
+.status-planned .modal-stripe,
+.modal-stripe.status-planned {
+  background: var(--status-planned);
+}
+
+.status-ongoing .modal-stripe,
+.modal-stripe.status-ongoing {
+  background: var(--status-ongoing);
+}
+
+.status-completed .modal-stripe,
+.modal-stripe.status-completed {
+  background: var(--status-completed);
+}
 
 .modal-header {
   display: flex;
@@ -44,17 +56,28 @@
 }
 
 .modal-close {
-  background: var(--cream);
+  background: #DC2626;
   border: none;
-  width: 32px; height: 32px;
+  color: #ffffff;
+  width: 34px; height: 34px;
   border-radius: 50%;
-  font-size: .9rem;
+  font-size: 1.1rem;
+  font-weight: 700;
   cursor: pointer;
   flex-shrink: 0;
-  transition: background var(--transition);
+  transition: background 0.18s ease, transform 0.15s ease, box-shadow 0.18s ease;
   display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.35);
 }
-.modal-close:hover { background: var(--cream-dark); }
+.modal-close:hover {
+  background: #B91C1C;
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.5);
+  transform: scale(1.1);
+}
+.modal-close:active {
+  background: #991B1B;
+  transform: scale(0.95);
+}
 
 .modal-body {
   padding: 20px 24px 24px;
@@ -121,9 +144,17 @@
   gap: 2px;
 }
 
-.tl-item span:last-child { font-size: .88rem; font-weight: 500; color: var(--navy); }
+.tl-item span:last-child {
+  font-size: .88rem;
+  font-weight: 500;
+  color: var(--navy);
+}
 
-.tl-arrow { color: var(--gold); font-weight: 700; font-size: 1.1rem; }
+.tl-arrow {
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
 
 .modal-coords {
   display: flex;
@@ -135,7 +166,9 @@
 }
 
 @media (max-width: 520px) {
-  .modal-grid { grid-template-columns: 1fr; }
+  .modal-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Image Gallery Styling */
@@ -152,7 +185,7 @@
   object-fit: cover;
   border-radius: 12px;
   border: 1px solid var(--cream-dark);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   transition: transform var(--transition);
 }
 
@@ -163,6 +196,7 @@
 .modal-progress-container {
   margin-top: 8px;
 }
+
 .modal-progress-bar-bg {
   height: 24px;
   background: var(--cream);
@@ -171,6 +205,7 @@
   border: 1px solid var(--cream-dark);
   position: relative;
 }
+
 .modal-progress-bar-fill {
   height: 100%;
   background: linear-gradient(90deg, var(--gold-lt), var(--gold-dim));
@@ -181,16 +216,25 @@
   justify-content: flex-end;
   padding-right: 12px;
 }
+
 .progress-text {
   font-size: 0.75rem;
   font-weight: 800;
   color: var(--white);
-  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-.modal-progress-bar-fill.progress-planned { background: linear-gradient(90deg, #60A5FA, #2563EB); }
-.modal-progress-bar-fill.progress-ongoing { background: linear-gradient(90deg, #FBBF24, #D97706); }
-.modal-progress-bar-fill.progress-completed { background: linear-gradient(90deg, #34D399, #059669); }
+.modal-progress-bar-fill.progress-planned {
+  background: linear-gradient(90deg, #60A5FA, #2563EB);
+}
+
+.modal-progress-bar-fill.progress-ongoing {
+  background: linear-gradient(90deg, #FBBF24, #D97706);
+}
+
+.modal-progress-bar-fill.progress-completed {
+  background: linear-gradient(90deg, #34D399, #059669);
+}
 
 /* ── Public project: affected divisions ── */
 .modal-public-divisions {

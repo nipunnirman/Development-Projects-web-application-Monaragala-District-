@@ -36,7 +36,7 @@ const importProjects = async () => {
     // Fetch all DS and GN divisions and store them in a Map for quick lookup
     const dsDivisions = await DsDivision.find({});
     const gnDivisions = await GnDivision.find({});
-    
+
     const dsMap = new Map(dsDivisions.map(d => [d.nameSi, d._id]));
     // Map with a compound key: dsNameSi + '|' + gnNameSi (in case GN names are duplicated across DSs)
     const gnMap = new Map();
@@ -55,7 +55,7 @@ const importProjects = async () => {
         data.dsDivision = 'සියඹලාන්ඩුව';
       }
       const dsId = dsMap.get(data.dsDivision) || null;
-      
+
       let gnId = null;
       let scope = 'specific';
 
