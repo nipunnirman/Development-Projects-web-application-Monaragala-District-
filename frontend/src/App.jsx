@@ -3,6 +3,7 @@ import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import TopHeader from './components/TopHeader';
 import Footer from './components/Footer';
+import WelcomeModal from './components/WelcomeModal';
 import ProjectsPage from './pages/ProjectsPage';
 import LoginPage from './pages/LoginPage';
 import AdminPage from './pages/AdminPage';
@@ -12,6 +13,7 @@ export default function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <WelcomeModal />
         <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
           <TopHeader />
           <Navbar />
