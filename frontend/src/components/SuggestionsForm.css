@@ -40,6 +40,13 @@
   border-radius: 12px;
   border: 1.5px solid rgba(201, 168, 76, 0.3);
 }
+@media (max-width: 480px) {
+  .suggestions-icon-wrap {
+    width: 44px;
+    height: 44px;
+    font-size: 1.8rem;
+  }
+}
 
 .suggestions-title-si {
   font-size: 1.35rem;
@@ -72,7 +79,7 @@
 .suggestions-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 22px;
 }
 
 .form-row {
@@ -92,6 +99,7 @@
 .required-star {
   color: var(--crimson);
   font-weight: bold;
+  font-size: 1.1rem;
 }
 
 .text-center {
@@ -108,11 +116,18 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  min-width: 250px;
-  padding: 12px 24px;
-  border-radius: 50px;
-  box-shadow: 0 4px 12px rgba(201, 168, 76, 0.2);
+  gap: 12px;
+  min-width: 260px;
+  padding: 14px 28px;
+  border-radius: 60px;
+  background: linear-gradient(135deg, rgba(201,168,76,0.9), rgba(255,210,85,0.9));
+  color: var(--navy-dark);
+  box-shadow: 0 6px 15px rgba(201, 168, 76, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.suggestions-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(201, 168, 76, 0.4);
 }
 
 .suggestions-submit-btn:disabled {
@@ -150,5 +165,14 @@
 
   .suggestions-submit-btn {
     width: 100%;
+    min-width: auto;
+    padding: 16px;
+    font-size: 1rem;
+  }
+
+  .form-input, .form-textarea {
+    font-size: 1rem;
+    padding: 12px;
+    border-radius: 10px;
   }
 }
