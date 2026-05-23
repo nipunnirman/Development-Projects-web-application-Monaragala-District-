@@ -4,6 +4,7 @@ import ProjectCard from '../components/ProjectCard';
 import ProjectModal from '../components/ProjectModal';
 import ProjectMap from '../components/ProjectMap';
 import ProjectDashboard from '../components/ProjectDashboard';
+import InfoPopup from '../components/InfoPopup';
 import './ProjectsPage.css';
 
 const STATUS_COUNTS = (projects) => ({
@@ -78,6 +79,7 @@ export default function ProjectsPage() {
   const [activeDs, setActiveDs] = useState('');
   const [activeGn, setActiveGn] = useState('');
   const [activeStatus, setActiveStatus] = useState('');
+  const [showPublicAlert, setShowPublicAlert] = useState(false);
 
   // Load Monaragala district + its DS divisions on mount
   useEffect(() => {
@@ -121,8 +123,11 @@ export default function ProjectsPage() {
     setActiveDs(dsId);
     setActiveGn('');           // clear GN when DS changes
     setGnDivisions([]);
-    if (dsId) {
+    if (dsId && dsId !== 'public') {
       getGnDivisions(dsId).then(r => setGnDivisions(r.data.data));
+    }
+    if (dsId === 'public') {
+      setShowPublicAlert(true);
     }
     loadProjects(dsId, '', activeStatus);
   };
@@ -352,6 +357,13 @@ export default function ProjectsPage() {
       </div>
 
       {selected && <ProjectModal project={selected} onClose={() => setSelected(null)} />}
+      {showPublicAlert && (
+        <InfoPopup
+          message="ප්‍රතිලාභ එක් කොට්ඨාසයකට පමණක් සීමා නොවන"
+          messageEn="Benefits of these projects are not limited to a single division (District-wide Projects)"
+          onClose={() => setShowPublicAlert(false)}
+        />
+      )}
     </div>
   );
 }

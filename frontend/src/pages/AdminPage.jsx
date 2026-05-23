@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { getProjects, deleteProject, getDistricts, getDsDivisions, getGnDivisions } from '../api';
 import ProjectForm from '../components/ProjectForm';
+import InfoPopup from '../components/InfoPopup';
 import './AdminPage.css';
 
 const STATUS_OPTIONS = [
@@ -47,6 +48,7 @@ export default function AdminPage() {
   const [activeDs, setActiveDs] = useState('');
   const [activeGn, setActiveGn] = useState('');
   const [activeStatus, setActiveStatus] = useState('');
+  const [showPublicAlert, setShowPublicAlert] = useState(false);
 
   useEffect(() => {
     if (!admin) { nav('/login'); return; }
@@ -96,6 +98,9 @@ export default function AdminPage() {
     setGnDivisions([]);
     if (dsId && dsId !== 'public') {
       getGnDivisions(dsId).then(r => setGnDivisions(r.data.data));
+    }
+    if (dsId === 'public') {
+      setShowPublicAlert(true);
     }
     fetchProjects(dsId, '', activeStatus);
   };
@@ -321,6 +326,13 @@ export default function AdminPage() {
           project={editProject}
           onSuccess={handleFormSuccess}
           onClose={() => { setShowForm(false); setEditProject(null); }}
+        />
+      )}
+      {showPublicAlert && (
+        <InfoPopup
+          message="ප්‍රතිලාභ එක් කොට්ඨාසයකට පමණක් සීමා නොවන"
+          messageEn="Benefits of these projects are not limited to a single division (District-wide Projects)"
+          onClose={() => setShowPublicAlert(false)}
         />
       )}
     </div>
