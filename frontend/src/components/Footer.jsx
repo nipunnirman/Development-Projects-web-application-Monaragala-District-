@@ -13,8 +13,8 @@ export default function Footer() {
         </div>
         <div className="footer-note">
           <div>Built with ❤️ for transparent governance · UTF-8 Sinhala support</div>
-          <div style={{ marginTop: '6px', fontSize: '0.85em', opacity: 0.8 }}>
-            Developed by <strong><a href="https://nipun-nirman.vercel.app" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>Nipun Nirman</a></strong>
+          <div className="footer-developer">
+            Developed by <strong><a href="https://nipun-nirman.vercel.app" target="_blank" rel="noopener noreferrer">Nipun Nirman</a></strong>
           </div>
         </div>
       </div>
