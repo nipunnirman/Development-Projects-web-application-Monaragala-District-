@@ -30,13 +30,14 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
 
   useEffect(() => {
     if (project) {
+      const isDsPublic = project.scope === 'public' && (project.dsDivisionId?._id || project.dsDivisionId);
       setForm({
         projectName: project.projectName || '',
         description: project.description || '',
-        scope: project.scope || 'specific',
+        scope: isDsPublic ? 'specific' : (project.scope || 'specific'),
         districtId:   project.districtId?._id || project.districtId || '',
         dsDivisionId: project.dsDivisionId?._id || project.dsDivisionId || '',
-        gnDivisionId: project.gnDivisionId?._id || project.gnDivisionId || '',
+        gnDivisionId: isDsPublic ? 'public' : (project.gnDivisionId?._id || project.gnDivisionId || ''),
         affectedDsDivisions: (project.affectedDsDivisions || []).map(d => d._id || d),
         affectedGnDivisions: (project.affectedGnDivisions || []).map(g => g._id || g),
         latitude:  project.latitude ?? '',
@@ -97,17 +98,19 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
     e.preventDefault();
     setLoading(true); setError('');
     try {
-      const isPublic = form.scope === 'public';
+      const isGnPublic = form.gnDivisionId === 'public';
+      const isPublic = form.scope === 'public' || isGnPublic;
       const payload = {
         ...form,
         latitude:  form.latitude  !== '' ? Number(form.latitude)  : null,
         longitude: form.longitude !== '' ? Number(form.longitude) : null,
         estimatedAmount: form.estimatedAmount !== '' ? Number(form.estimatedAmount) * 1000000 : 0,
         progress: Number(form.progress) || 0,
-        // For public projects, clear the specific division fields
-        dsDivisionId: isPublic ? null : form.dsDivisionId,
+        scope: isPublic ? 'public' : 'specific',
+        // For public projects, keep dsDivisionId if restricted to a single DS
+        dsDivisionId: isGnPublic ? form.dsDivisionId : (isPublic ? null : form.dsDivisionId),
         gnDivisionId: isPublic ? null : form.gnDivisionId,
-        affectedDsDivisions: isPublic ? form.affectedDsDivisions : [],
+        affectedDsDivisions: isGnPublic ? [form.dsDivisionId] : (isPublic ? form.affectedDsDivisions : []),
         affectedGnDivisions: [],
         startDate: form.startDate || null,
         endDate: form.endDate || null,
@@ -282,9 +285,9 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
                     /* GN already selected — show badge + change button */
                     <div className="gn-selected-badge">
                       <span className="gn-selected-name">
-                        ✅ {gnDivisions.find(g => g._id === form.gnDivisionId)?.nameSi || '—'}
+                        ✅ {form.gnDivisionId === 'public' ? 'පොදු' : (gnDivisions.find(g => g._id === form.gnDivisionId)?.nameSi || '—')}
                         <span className="gn-selected-en">
-                          {gnDivisions.find(g => g._id === form.gnDivisionId)?.name}
+                          {form.gnDivisionId === 'public' ? 'Public' : gnDivisions.find(g => g._id === form.gnDivisionId)?.name}
                         </span>
                       </span>
                       <button
@@ -313,10 +316,13 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
                         required={!isPublic}
                         size={Math.min(7, gnDivisions.filter(g =>
                           !gnSearch || g.nameSi.includes(gnSearch) || g.name.toLowerCase().includes(gnSearch.toLowerCase())
-                        ).length + 1)}
+                        ).length + 2)}
                         style={{ height: 'auto' }}
                       >
                         <option value="">-- GN Division තෝරන්න --</option>
+                        {(!gnSearch || 'පොදු'.includes(gnSearch) || 'public'.includes(gnSearch.toLowerCase())) && (
+                          <option value="public">පොදු — Public</option>
+                        )}
                         {gnDivisions
                           .filter(g => !gnSearch || g.nameSi.includes(gnSearch) || g.name.toLowerCase().includes(gnSearch.toLowerCase()))
                           .map(g => (
