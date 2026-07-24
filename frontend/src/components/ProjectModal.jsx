@@ -113,13 +113,21 @@ export default function ProjectModal({ project, onClose }) {
           </div>
 
           <section className="modal-section">
-            <div className="modal-section-label">Project Progress / ව්‍යාපෘති ප්‍රගතිය</div>
+            <div className="modal-section-label">PROGRESS PERCENTAGE / ප්‍රගතිය</div>
             <div className="modal-progress-container">
               <div className="modal-progress-bar-bg">
                 <div className={`modal-progress-bar-fill progress-${project.status}`} style={{ width: `${project.progress || 0}%` }}>
                   <span className="progress-text">{project.progress || 0}%</span>
                 </div>
               </div>
+              {project.updatedAt && (
+                <div className="modal-progress-updated">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ flexShrink: 0 }}>
+                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                  <span>Progress last updated: <strong>{new Date(project.updatedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</strong></span>
+                </div>
+              )}
             </div>
           </section>
 

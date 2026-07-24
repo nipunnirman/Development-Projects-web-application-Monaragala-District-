@@ -197,6 +197,27 @@
   margin-top: 8px;
 }
 
+.modal-progress-updated {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 8px;
+  font-size: 0.78rem;
+  color: var(--slate-lt);
+  font-style: italic;
+}
+
+.modal-progress-updated svg {
+  color: var(--gold-dim);
+  opacity: 0.85;
+}
+
+.modal-progress-updated strong {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--slate);
+}
+
 .modal-progress-bar-bg {
   height: 24px;
   background: var(--cream);
