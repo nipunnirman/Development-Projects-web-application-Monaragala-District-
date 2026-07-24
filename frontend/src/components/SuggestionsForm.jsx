@@ -50,9 +50,9 @@ export default function SuggestionsForm() {
             <h2 className="suggestions-title-si sinhala">යෝජනා සහ අදහස්</h2>
             <h3 className="suggestions-title-en">Suggestions & Feedback</h3>
             <p className="suggestions-desc sinhala">
-              දිස්ත්‍රික්කයේ සංවර්ධන කටයුතු පිළිබඳ ඔබේ යෝජනා සහ අදහස් අප වෙත යොමු කරන්න.
+              මෙහි ඇතුලත් ව්‍යාපෘති පිළිබඳ පමණක් අදහස් හා යෝජනා ඉදිරිපත් කරන්න.
               <br />
-              <span className="en-desc">Submit your ideas and suggestions regarding the development projects in the district.</span>
+              <span className="en-desc">Please submit comments and suggestions only about the projects listed here.</span>
             </p>
           </div>
         </div>
