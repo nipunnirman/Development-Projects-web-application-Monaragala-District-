@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import TopHeader from './components/TopHeader';
 import Footer from './components/Footer';
 import WelcomeModal from './components/WelcomeModal';
+import PwaInstallBanner from './components/PwaInstallBanner';
 import ProjectsPage from './pages/ProjectsPage';
 import LoginPage from './pages/LoginPage';
 import AdminPage from './pages/AdminPage';
@@ -25,6 +26,7 @@ export default function App() {
             </Routes>
           </div>
           <Footer />
+          <PwaInstallBanner />
           <a
             href="tel:0552276769"
             style={{

@@ -1,0 +1,108 @@
+.pwa-banner {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  background: var(--navy, #1e3a5f);
+  color: #fff;
+  border-radius: 16px;
+  padding: 12px 16px 12px 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), 0 2px 8px rgba(0, 0, 0, 0.2);
+
+  min-width: 280px;
+  max-width: calc(100vw - 40px);
+
+  animation: pwa-slide-up 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes pwa-slide-up {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.pwa-banner-icon img {
+  border-radius: 10px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.pwa-banner-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.pwa-banner-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: 'Noto Sans Sinhala', sans-serif;
+}
+
+.pwa-banner-sub {
+  font-size: 0.73rem;
+  color: rgba(255, 255, 255, 0.65);
+  margin-top: 1px;
+}
+
+.pwa-banner-btn {
+  background: #c9a227;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.18s ease, transform 0.12s ease;
+  letter-spacing: 0.03em;
+}
+
+.pwa-banner-btn:hover {
+  background: #a87f15;
+  transform: scale(1.04);
+}
+
+.pwa-banner-close {
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.pwa-banner-close:hover {
+  background: rgba(255, 255, 255, 0.22);
+  color: #fff;
+}
+
+@media (max-width: 400px) {
+  .pwa-banner {
+    bottom: 12px;
+    border-radius: 14px;
+    padding: 10px 12px 10px 10px;
+  }
+}
