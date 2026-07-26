@@ -132,8 +132,14 @@
 /* ── Scope Toggle ── */
 .scope-toggle {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+@media (max-width: 600px) {
+  .scope-toggle {
+    grid-template-columns: 1fr;
+  }
 }
 
 .scope-btn {
@@ -161,6 +167,43 @@
   border-color: #7C3AED;
   background: #7C3AED;
 }
+
+.scope-btn-active.scope-btn-district {
+  border-color: #0e7490;
+  background: #0e7490;
+}
+
+/* District-wide info panel */
+.district-wide-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%);
+  border: 1.5px solid #0e7490;
+  border-radius: 12px;
+  padding: 18px 20px;
+}
+
+.district-wide-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.district-wide-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0e7490;
+  font-family: 'Noto Sans Sinhala', sans-serif;
+  margin-bottom: 6px;
+}
+
+.district-wide-sub {
+  font-size: 0.82rem;
+  color: #155e75;
+  line-height: 1.55;
+}
+
 
 .scope-icon { font-size: 1.5rem; }
 
