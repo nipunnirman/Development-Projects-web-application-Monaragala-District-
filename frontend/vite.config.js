@@ -8,7 +8,12 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+
+      // Use defer to avoid blocking Safari rendering
+      injectRegister: 'script-defer',
+
       includeAssets: ['favicon.svg', 'apple-touch-icon.png', '*.png', '*.jpg'],
+
       manifest: {
         name: 'මොණරාගල දිස්ත්‍රික්කයේ සංවර්ධන ව්‍යාපෘති',
         short_name: 'Monaragala',
@@ -40,11 +45,19 @@ export default defineConfig({
           },
         ],
       },
+
       workbox: {
         // Cache all static assets
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg,woff,woff2,ttf}'],
+        globPatterns: ['**/*.{js,css,ico,png,svg,jpg,jpeg,woff,woff2,ttf}'],
+
+        // ✅ SAFARI FIX: Disable NavigationRoute
+        // Vercel already handles SPA routing via vercel.json rewrites.
+        // The SW NavigationRoute + Vercel rewrites conflict in Safari → white screen.
+        navigateFallback: null,
+
         // Cache name prefix
         cacheId: 'monaragala-dev-projects',
+
         // Runtime caching strategies
         runtimeCaching: [
           {
@@ -84,9 +97,10 @@ export default defineConfig({
           },
         ],
       },
-      // Dev options — enable service worker in dev mode for testing
+
+      // Dev options — disable in dev to avoid confusion
       devOptions: {
-        enabled: false, // set true to test SW in dev
+        enabled: false,
       },
     }),
   ],
