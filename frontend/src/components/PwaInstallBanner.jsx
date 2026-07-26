@@ -75,7 +75,7 @@ export default function PwaInstallBanner() {
         </div>
         <div className="pwa-banner-text">
           <div className="pwa-banner-title">යෙදුම ස්ථාපනය කරන්න</div>
-          <div className="pwa-banner-sub">Install DCC මොණරාගල</div>
+          <div className="pwa-banner-sub">Install DCC Monaragala</div>
         </div>
         <button className="pwa-banner-btn" onClick={handleInstall}>
           {isIOS && showInstructions ? 'Hide Guide' : 'Install'}
