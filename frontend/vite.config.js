@@ -13,8 +13,8 @@ export default defineConfig({
       includeAssets: ['favicon.svg', 'apple-touch-icon.png', '*.png', '*.jpg'],
 
       manifest: {
-        name: 'මොණරාගල දිස්ත්‍රික්කයේ සංවර්ධන ව්‍යාපෘති',
-        short_name: 'Monaragala',
+        name: 'DCC මොණරාගල',
+        short_name: 'DCC මොණරාගල',
         description: 'මොණරාගල දිස්ත්‍රික්කයේ සංවර්ධන ව්‍යාපෘති — සාරාංශය සහ ප්‍රගතිය',
         theme_color: '#1e3a5f',
         background_color: '#f8f6f0',
