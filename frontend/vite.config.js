@@ -8,9 +8,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-
-      // Use defer to avoid blocking Safari rendering
-      injectRegister: 'script-defer',
+      injectRegister: 'script-defer',  // don't block Safari rendering
 
       includeAssets: ['favicon.svg', 'apple-touch-icon.png', '*.png', '*.jpg'],
 
@@ -27,81 +25,60 @@ export default defineConfig({
         lang: 'si',
         categories: ['government', 'productivity'],
         icons: [
-          {
-            src: 'pwa-192x192.png',
-            sizes: '192x192',
-            type: 'image/png',
-          },
-          {
-            src: 'pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-          },
-          {
-            src: 'pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any maskable',
-          },
+          { src: 'pwa-192x192.png', sizes: '192x192', type: 'image/png' },
+          { src: 'pwa-512x512.png', sizes: '512x512', type: 'image/png' },
+          { src: 'pwa-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },
         ],
       },
 
       workbox: {
-        // Cache all static assets
+        // Only cache static assets — NOT html files
         globPatterns: ['**/*.{js,css,ico,png,svg,jpg,jpeg,woff,woff2,ttf}'],
 
-        // ✅ SAFARI FIX: Disable NavigationRoute
-        // Vercel already handles SPA routing via vercel.json rewrites.
-        // The SW NavigationRoute + Vercel rewrites conflict in Safari → white screen.
+        // ✅ SAFARI FIX #1: New cache ID — forces old caches to be cleaned up
+        // The index.html inline script detects the old name and self-destructs
+        cacheId: 'monaragala-dev-projects-v2',
+
+        // ✅ SAFARI FIX #2: No navigation interception
+        // Vercel rewrites handle SPA routing via vercel.json
         navigateFallback: null,
 
-        // Cache name prefix
-        cacheId: 'monaragala-dev-projects',
+        // ✅ SAFARI FIX #3: Force new SW to activate immediately
+        // Replaces old broken SW without waiting for all tabs to close
+        skipWaiting: true,
+        clientsClaim: true,
 
-        // Runtime caching strategies
+        // Clean up caches from old SW versions
+        cleanupOutdatedCaches: true,
+
         runtimeCaching: [
           {
-            // API calls: NetworkFirst — try network, fall back to cache
             urlPattern: ({ url }) => url.pathname.startsWith('/api/'),
             handler: 'NetworkFirst',
             options: {
               cacheName: 'api-cache',
-              expiration: {
-                maxEntries: 200,
-                maxAgeSeconds: 24 * 60 * 60, // 24 hours
-              },
+              expiration: { maxEntries: 200, maxAgeSeconds: 24 * 60 * 60 },
               networkTimeoutSeconds: 10,
-              cacheableResponse: {
-                statuses: [0, 200],
-              },
+              cacheableResponse: { statuses: [0, 200] },
             },
           },
           {
-            // Google Fonts: CacheFirst
             urlPattern: /^https:\/\/fonts\.googleapis\.com/,
             handler: 'CacheFirst',
-            options: {
-              cacheName: 'google-fonts-stylesheets',
-            },
+            options: { cacheName: 'google-fonts-stylesheets' },
           },
           {
             urlPattern: /^https:\/\/fonts\.gstatic\.com/,
             handler: 'CacheFirst',
             options: {
               cacheName: 'google-fonts-webfonts',
-              expiration: {
-                maxEntries: 30,
-                maxAgeSeconds: 365 * 24 * 60 * 60, // 1 year
-              },
+              expiration: { maxEntries: 30, maxAgeSeconds: 365 * 24 * 60 * 60 },
             },
           },
         ],
       },
 
-      // Dev options — disable in dev to avoid confusion
-      devOptions: {
-        enabled: false,
-      },
+      devOptions: { enabled: false },
     }),
   ],
 })

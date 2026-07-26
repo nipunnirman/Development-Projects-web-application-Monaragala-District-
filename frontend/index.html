@@ -30,6 +30,40 @@
     <meta property="og:description" content="මොණරාගල දිස්ත්‍රික්කයේ සංවර්ධන ව්‍යාපෘති — සාරාංශය සහ ප්‍රගතිය" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="/pwa-512x512.png" />
+
+    <!--
+      Safari SW fix: unregister any old service worker that may be
+      intercepting navigation and causing a white screen.
+      This runs synchronously before React loads, so it works even
+      if the old SW is serving this very HTML file from its cache.
+    -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function (registrations) {
+          registrations.forEach(function (reg) {
+            // If the SW scope doesn't match current origin, always remove
+            var swUrl = reg.active && reg.active.scriptURL;
+            // Remove service workers that are using old cache versions
+            // (those that have NavigationRoute and cause blank pages)
+            if (swUrl && swUrl.indexOf('/sw.js') !== -1) {
+              // Check if caches contain old monaragala-dev-projects (not v2)
+              caches.keys().then(function (keys) {
+                var hasOldCache = keys.some(function (k) {
+                  return k.indexOf('monaragala-dev-projects') !== -1 &&
+                         k.indexOf('monaragala-dev-projects-v2') === -1;
+                });
+                if (hasOldCache) {
+                  // Delete all old caches and unregister old SW
+                  Promise.all(keys.map(function (k) { return caches.delete(k); }))
+                    .then(function () { return reg.unregister(); })
+                    .then(function () { window.location.reload(); });
+                }
+              });
+            }
+          });
+        });
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
