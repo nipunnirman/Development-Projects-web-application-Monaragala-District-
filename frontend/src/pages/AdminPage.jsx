@@ -187,6 +187,10 @@ export default function AdminPage() {
             <span className="ds-filter-label">ප්‍රාදේශීය ලේකම්</span>
             <div className="ds-buttons">
               <button
+                className={`ds-btn ${activeDs === 'public' ? 'ds-btn-active' : ''}`}
+                onClick={() => handleDsClick('public')}
+              >දිස්ත්‍රික්කයේ පොදු</button>
+              <button
                 className={`ds-btn ${activeDs === '' ? 'ds-btn-active' : ''}`}
                 onClick={() => handleDsClick('')}
               >සමස්ථ</button>
@@ -197,10 +201,6 @@ export default function AdminPage() {
                   onClick={() => handleDsClick(ds._id)}
                 >{ds.nameSi || ds.name}</button>
               ))}
-              <button
-                className={`ds-btn ${activeDs === 'public' ? 'ds-btn-active' : ''}`}
-                onClick={() => handleDsClick('public')}
-              >දිස්ත්‍රික්කයේ පොදු</button>
             </div>
           </div>
 

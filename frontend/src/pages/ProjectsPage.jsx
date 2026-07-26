@@ -185,6 +185,12 @@ export default function ProjectsPage() {
             <span className="ds-filter-label">ප්‍රාදේශීය ලේකම්</span>
             <div className="ds-buttons">
               <button
+                className={`ds-btn ${activeDs === 'public' ? 'ds-btn-active' : ''}`}
+                onClick={() => handleDsClick('public')}
+              >
+                දිස්ත්‍රික්කයේ පොදු
+              </button>
+              <button
                 className={`ds-btn ${activeDs === '' ? 'ds-btn-active' : ''}`}
                 onClick={() => handleDsClick('')}
               >
@@ -199,12 +205,6 @@ export default function ProjectsPage() {
                   {ds.nameSi || ds.name}
                 </button>
               ))}
-              <button
-                className={`ds-btn ${activeDs === 'public' ? 'ds-btn-active' : ''}`}
-                onClick={() => handleDsClick('public')}
-              >
-                දිස්ත්‍රික්කයේ පොදු
-              </button>
             </div>
           </div>
 
