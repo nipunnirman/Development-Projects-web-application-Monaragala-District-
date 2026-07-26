@@ -118,16 +118,18 @@
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  width: 100%;
+  width: calc(100% - 32px);
   max-width: 380px;
+  box-sizing: border-box;
 }
 
 /* Override .pwa-banner positioning when inside container */
 .pwa-banner-container .pwa-banner {
-  position: static;
+  position: relative;
   transform: none;
   width: 100%;
-  max-width: calc(100vw - 32px);
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 /* iOS instructions tooltip styling */
@@ -142,8 +144,9 @@
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.25);
   border: 1px solid rgba(255, 255, 255, 0.15);
   position: relative;
-  width: calc(100vw - 32px);
-  max-width: 360px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   animation: pwa-tooltip-fade 0.25s ease-out;
 }
 
