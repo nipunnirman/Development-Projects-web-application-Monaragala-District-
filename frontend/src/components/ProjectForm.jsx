@@ -7,6 +7,7 @@ import './ProjectForm.css';
 const EMPTY = {
   projectName: '', description: '',
   scope: 'specific',                  // 'specific' | 'public'
+  districtWide: false,                // true = district-wide (no specific DS)
   districtId: '', dsDivisionId: '', gnDivisionId: '',
   affectedDsDivisions: [],            // for public scope
   affectedGnDivisions: [],            // for public scope
@@ -30,12 +31,16 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
 
   useEffect(() => {
     if (project) {
-      const isDistrictWide = project.scope === 'public' && !project.dsDivisionId?._id && !project.dsDivisionId;
       const isDsPublic = project.scope === 'public' && (project.dsDivisionId?._id || project.dsDivisionId);
+      // District-wide: scope=public, dsDivisionId=null, affectedDsDivisions empty
+      const isDistrictWide = project.scope === 'public'
+        && !project.dsDivisionId
+        && (!project.affectedDsDivisions || project.affectedDsDivisions.length === 0);
       setForm({
         projectName: project.projectName || '',
         description: project.description || '',
-        scope: isDistrictWide ? 'district' : (isDsPublic ? 'specific' : (project.scope || 'specific')),
+        scope: isDsPublic ? 'specific' : (project.scope || 'specific'),
+        districtWide: isDistrictWide,
         districtId:   project.districtId?._id || project.districtId || '',
         dsDivisionId: project.dsDivisionId?._id || project.dsDivisionId || '',
         gnDivisionId: isDsPublic ? 'public' : (project.gnDivisionId?._id || project.gnDivisionId || ''),
@@ -88,6 +93,7 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
       const arr = f.affectedDsDivisions;
       return {
         ...f,
+        districtWide: false, // deselect district-wide when picking individual DS
         affectedDsDivisions: arr.includes(dsId)
           ? arr.filter(id => id !== dsId)
           : [...arr, dsId],
@@ -95,29 +101,36 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
     });
   };
 
+  // Toggle district-wide — clears all individual DS selections
+  const toggleDistrictWide = () => {
+    setForm(f => ({
+      ...f,
+      districtWide: !f.districtWide,
+      affectedDsDivisions: [],
+    }));
+  };
+
   const handleSubmit = async e => {
     e.preventDefault();
     setLoading(true); setError('');
     try {
-      const isDistrictWide = form.scope === 'district'; // දිස්ත්‍රික්කයේ පොදු: scope=public, dsDivisionId=null
-      const isGnPublic = !isDistrictWide && form.gnDivisionId === 'public';
-      const isPublic   = !isDistrictWide && (form.scope === 'public' || isGnPublic);
+      const isGnPublic = form.gnDivisionId === 'public';
+      const isPublic = form.scope === 'public' || isGnPublic;
       const payload = {
         ...form,
         latitude:  form.latitude  !== '' ? Number(form.latitude)  : null,
         longitude: form.longitude !== '' ? Number(form.longitude) : null,
         estimatedAmount: form.estimatedAmount !== '' ? Number(form.estimatedAmount) * 1000000 : 0,
         progress: Number(form.progress) || 0,
-        scope: (isDistrictWide || isPublic) ? 'public' : 'specific',
-        dsDivisionId: isDistrictWide ? null
-          : isGnPublic  ? form.dsDivisionId
-          : isPublic    ? null
-          : form.dsDivisionId,
-        gnDivisionId: (isDistrictWide || isPublic) ? null : form.gnDivisionId,
-        affectedDsDivisions: isDistrictWide ? []
-          : isGnPublic ? [form.dsDivisionId]
-          : isPublic   ? form.affectedDsDivisions
-          : [],
+        scope: isPublic ? 'public' : 'specific',
+        // District-wide: dsDivisionId=null, affectedDsDivisions=[]
+        // DS-specific public (GN public): dsDivisionId=dsId, affectedDsDivisions=[dsId]
+        // Multi-DS public: dsDivisionId=null, affectedDsDivisions=[...selected]
+        dsDivisionId: isGnPublic ? form.dsDivisionId : (isPublic ? null : form.dsDivisionId),
+        gnDivisionId: isPublic ? null : form.gnDivisionId,
+        affectedDsDivisions: isGnPublic
+          ? [form.dsDivisionId]
+          : (isPublic && !form.districtWide ? form.affectedDsDivisions : []),
         affectedGnDivisions: [],
         startDate: form.startDate || null,
         endDate: form.endDate || null,
@@ -142,8 +155,7 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
     }
   };
 
-  const isPublic      = form.scope === 'public';
-  const isDistrictWide = form.scope === 'district';
+  const isPublic = form.scope === 'public';
 
   return (
     <div className="form-overlay">
@@ -159,11 +171,11 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
 
           {/* ── Project Scope Toggle ── */}
           <div className="form-section">
-            <div className="form-section-title">ව්‍යාපෘති වරගය / Project Scope</div>
+            <div className="form-section-title">ව්‍යාපෘති වර්ගය / Project Scope</div>
             <div className="scope-toggle">
               <button
                 type="button"
-                className={`scope-btn ${!isPublic && !isDistrictWide ? 'scope-btn-active' : ''}`}
+                className={`scope-btn ${!isPublic ? 'scope-btn-active' : ''}`}
                 onClick={() => set('scope', 'specific')}
               >
                 <span className="scope-icon">📍</span>
@@ -183,19 +195,8 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
                   <div className="scope-sub">District-wide / Multiple Divisions</div>
                 </div>
               </button>
-              <button
-                type="button"
-                className={`scope-btn ${isDistrictWide ? 'scope-btn-active scope-btn-district' : ''}`}
-                onClick={() => set('scope', 'district')}
-              >
-                <span className="scope-icon">🏙️</span>
-                <div>
-                  <div className="scope-title">දිස්ත්‍රික්කයේ පොදු</div>
-                  <div className="scope-sub">District-Wide Common</div>
-                </div>
-              </button>
             </div>
-
+          </div>
 
           {/* Project Info */}
           <div className="form-section">
@@ -253,43 +254,51 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
             </div>
           </div>
 
-          {/* Location — different UI for specific vs public vs district */}
+          {/* Location — different UI for specific vs public */}
           <div className="form-section">
             <div className="form-section-title">
-              {isDistrictWide
-                ? 'දිස්ත්‍රික්කයේ පොදු / District-Wide'
-                : isPublic
-                  ? 'බලපාම් ලද ප්‍රාදේශීය ලේකම් කොට්චාශ / Affected DS Divisions'
-                  : 'Location Hierarchy'}
+              {isPublic ? 'බලපෑම් ලද ප්‍රාදේශීය ලේකම් කොට්ඨාශ / Affected DS Divisions' : 'Location Hierarchy'}
             </div>
-            {isDistrictWide ? (
-              /* District-wide: no DS/GN selection needed */
-              <div className="district-wide-info">
-                <div className="district-wide-icon">🏙️</div>
-                <div>
-                  <div className="district-wide-title">දිස්ත්‍රික්කයේ පොදු ව්‍යාපෘතිය</div>
-                  <div className="district-wide-sub">
-                    This project will appear under the <strong>"දිස්ත්‍රික්කයේ පොදු"</strong> filter on the public portal.
-                    It is not linked to any specific DS or GN division.
-                  </div>
-                </div>
-              </div>
-            ) : isPublic ? (
-              /* Public scope — checkbox list of DS divisions */
+
+            {isPublic ? (
+              /* Public scope — district-wide toggle + checkbox list of DS divisions */
               <div>
                 <p style={{fontSize:'0.82rem', color:'var(--slate-lt)', marginBottom:12}}>
-                  🛣️ මේම ව්‍යාපෘතිය ගමන් කරන ප්‍රාදේශීය ලේකම් කොට්චාශ තෝරන්න
+                  🛣️ මෙම ව්‍යාපෘතිය ගමන් කරන ප්‍රාදේශීය ලේකම් කොට්ඨාශ තෝරන්න
                 </p>
+
+                {/* ── District-Wide toggle button ── */}
+                <button
+                  type="button"
+                  className={`district-wide-btn ${form.districtWide ? 'district-wide-active' : ''}`}
+                  onClick={toggleDistrictWide}
+                >
+                  <span className="district-wide-icon">{form.districtWide ? '✅' : '🌐'}</span>
+                  <div>
+                    <div className="district-wide-title">දිස්ත්‍රික්කයේ පොදු</div>
+                    <div className="district-wide-sub">District-Wide — all divisions</div>
+                  </div>
+                  {form.districtWide && <span className="district-wide-check">Selected</span>}
+                </button>
+
+                {/* Individual DS division checkboxes */}
                 {dsDivisions.length === 0 && (
-                  <p style={{color:'var(--slate-lt)', fontSize:'0.85rem'}}>Loading divisions…</p>
+                  <p style={{color:'var(--slate-lt)', fontSize:'0.85rem', marginTop:10}}>Loading divisions…</p>
                 )}
-                <div className="affected-ds-grid">
+                <div className={`affected-ds-grid ${form.districtWide ? 'affected-ds-grid-disabled' : ''}`}>
                   {dsDivisions.map(ds => (
-                    <label key={ds._id} className={`affected-ds-item ${form.affectedDsDivisions.includes(ds._id) ? 'affected-active' : ''}`}>
+                    <label
+                      key={ds._id}
+                      className={`affected-ds-item ${
+                        form.districtWide ? 'affected-ds-item-muted' :
+                        form.affectedDsDivisions.includes(ds._id) ? 'affected-active' : ''
+                      }`}
+                    >
                       <input
                         type="checkbox"
-                        checked={form.affectedDsDivisions.includes(ds._id)}
+                        checked={form.districtWide ? false : form.affectedDsDivisions.includes(ds._id)}
                         onChange={() => toggleAffectedDs(ds._id)}
+                        disabled={form.districtWide}
                       />
                       <span>{ds.nameSi}</span>
                       <span className="affected-ds-sub">{ds.name}</span>
@@ -303,7 +312,7 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
                 <div className="form-group">
                   <label className="form-label">DS Division *</label>
                   <select className="form-select" value={form.dsDivisionId} onChange={handleDs} required={!isPublic} disabled={!form.districtId}>
-                    <option value="">-- ප්‍රාදේශීය ලේකම් කොට්චාශය තෝරන්න --</option>
+                    <option value="">-- ප්‍රාදේශීය ලේකම් කොට්ඨාශය තෝරන්න --</option>
                     {dsDivisions.map(d => (
                       <option key={d._id} value={d._id}>{d.nameSi} — {d.name}</option>
                     ))}
@@ -329,7 +338,7 @@ export default function ProjectForm({ project, onSuccess, onClose }) {
                         className="gn-change-btn"
                         onClick={() => { set('gnDivisionId', ''); setGnSearch(''); }}
                       >
-                        ✎ වේනස් කරන්න
+                        ✎ වෙනස් කරන්න
                       </button>
                     </div>
                   ) : (
